@@ -49,3 +49,18 @@ exports.register = (req, res) => {
             }
         })
 };
+
+exports.get_company = (req, res, next) => {
+   User.find({type:'company'}).exec()
+   .then(result =>{
+       res.status(200).json({
+           success: true,
+           result : result
+       })
+   })
+   .catch(err=>{
+       res.status(401).json({
+           error: err
+       })
+   })
+}
