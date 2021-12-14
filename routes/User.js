@@ -5,6 +5,6 @@ const { register, get_company } = require('../controllers/User')
 
 router.post('/register', register)
 
-router.get('get_company', get_company)
+router.get('/get_company', get_company)
 
 module.exports = router
