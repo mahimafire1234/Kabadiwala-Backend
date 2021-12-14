@@ -7,11 +7,9 @@ const fs = require('fs')
 const User = require("../models/user")
 
 exports.register = (req, res) => {
-
     User.find({ email: req.body.email })
         .exec()
         .then(user => {
-
             if (user.length >= 1) {
                 return res.status(409).json({
                     message: "Email address already used"
