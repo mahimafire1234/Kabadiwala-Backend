@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     image: {type: String},
     type: {
         type: String,
-        enum: ['vendor', 'individual', 'normal']
+        enum: ['company', 'normal']
     }
 })
 
