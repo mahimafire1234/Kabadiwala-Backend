@@ -49,3 +49,16 @@ exports.register = (req, res) => {
             }
         })
 };
+
+exports.showOne = (req, res) => {
+    const id = req.params.id;
+
+    User.findById(id)
+    .exe()
+    .then(function (data) {
+        response.status(201).json(data)
+        })
+    .catch(function (error) {
+        response.status(500).json({ message: "error" })
+    })
+};
