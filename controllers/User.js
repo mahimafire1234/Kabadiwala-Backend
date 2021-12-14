@@ -18,7 +18,10 @@ exports.register = (req, res) => {
                 
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
-                        return error_message(res, err, "Registration failed")
+                        return res.status(500).json({
+                            error: err,
+                            message: "Registration failed"
+                        })
                     } else {
                      
                         const user = new User({
