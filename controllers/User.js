@@ -52,12 +52,20 @@ exports.register = (req, res) => {
 
 exports.get_company = (req, res, next) => {
    User.find({type:'company'}).exec()
-   .then(result =>{
-       res.status(200).json({
-           success: true,
-           result : result
-       })
-   })
+   .then(docs => {
+        const response = {
+        count: docs.length,
+        user: docs.map(doc => {
+        return {
+            email: doc.email,
+            name: doc.name,
+            phone: doc.phone,
+            image: doc.image,
+        };
+    })
+    }
+    res.status(200).json(response);
+    })
    .catch(err=>{
        res.status(401).json({
            error: err
