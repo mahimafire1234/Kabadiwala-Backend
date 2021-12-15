@@ -6,6 +6,7 @@ const fs = require('fs')
 
 const User = require("../models/user")
 
+//register user account
 exports.register = (req, res) => {
     User.find({ email: req.body.email })
         .exec()
@@ -49,19 +50,19 @@ exports.register = (req, res) => {
             }
         })
 };
-
+// show one company
 exports.showOne = (req, res) => {
     const id = req.params.id;
-
     User.findById(id)
-    .exe()
+    .exec()
     .then(function (data) {
-        response.status(201).json(data)
+        res.status(201).json(data)
         })
     .catch(function (error) {
-        response.status(500).json({ message: "error" })
+        res.status(500).json({ message: "error" })
     })
 };
+//show list of companies
 exports.get_company = (req, res, next) => {
    User.find({type:'company'}).exec()
    .then(result =>{
