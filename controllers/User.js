@@ -8,6 +8,7 @@ const User = require("../models/user");
 const { Module } = require("module");
 
 exports.register = (req, res) => {
+    console.log(req.body)
     User.find({ email: req.body.email })
         .exec()
         .then(user => {
@@ -31,7 +32,7 @@ exports.register = (req, res) => {
                             password: hash,
                             name: req.body.name,
                             phone: req.body.phone,
-                            type: req.body.type
+                            usertype: req.body.usertype
                         });
 
                         user
@@ -47,6 +48,7 @@ exports.register = (req, res) => {
                                     error: err,
                                     message: "Error creating the user"
                                 })
+                                console.log(err)
                             })
                     }
                 })
@@ -63,7 +65,7 @@ exports.login_user =  function (req, res) {
 
     // we need to check if the username exits or not
 
-    userModel.findOne({ email: email })
+    User.findOne({ email: email })
         .then(function (userdata) {
             console.log(userdata)
 
