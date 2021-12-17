@@ -12,6 +12,7 @@ exports.register = (req, res) => {
         .then(user => {
             if (user.length >= 1) {
                 return res.status(409).json({
+                    success: false,
                     message: "Email address already used"
                 });
             } else {
