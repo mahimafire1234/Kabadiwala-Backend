@@ -57,46 +57,7 @@ exports.register = (req, res) => {
         })
 };
 
-
-//show list of companies
-exports.get_company = (req, res, next) => {
-    User.find({type:'company'}).exec()
-    .then(docs => {
-         const response = {
-         count: docs.length,
-         user: docs.map(doc => {
-         return {
-             email: doc.email,
-             name: doc.name,
-             phone: doc.phone,
-             image: doc.image,
-         };
-     })
-     }
-     res.status(200).json(response);
-     })
-    .catch(err=>{
-        res.status(401).json({
-            error: err
-        })
-    })
- }
- 
-// show one company
-exports.showOne = (req, res) => {
-    const id = req.params.id;
-    User.findById(id)
-    .exec()
-    .then(function (data) {
-        res.status(201).json(data)
-        })
-    .catch(function (error) {
-        res.status(500).json({ message: "error" })
-    })
-};
-
-
-
+//login to account
 exports.login_user =  function (req, res) {
     console.log(req.body)
     // first we need email and passord 
@@ -145,4 +106,53 @@ exports.login_user =  function (req, res) {
         })
 
 }
+
+//show list of companies
+exports.get_company = (req, res, next) => {
+    User.find({type:'company'}).exec()
+    .then(docs => {
+         const response = {
+         count: docs.length,
+         user: docs.map(doc => {
+         return {
+             email: doc.email,
+             name: doc.name,
+             phone: doc.phone,
+             image: doc.image,
+         };
+     })
+     }
+     res.status(200).json(response);
+     })
+    .catch(err=>{
+        res.status(401).json({
+            error: err
+        })
+    })
+ }
+ 
+// show one company
+exports.showOne = (req, res, next) => {
+    const id = req.params.id;
+    User.findById(id).exec()
+    .then(docs => {
+        const response = {
+            user: {
+                    email: docs.email,
+                    name: docs.name,
+                    phone: docs.phone,
+                    image: docs.image,
+            }
+            }
+            res.status(200).json(response)
+        }  
+    )
+    .catch(err=> {
+        res.status(401).json({
+            error:err
+        })
+        console.log(err);
+    });
+}
+
 
