@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    // _id: mongoose.Schema.Types.ObjectId,
     email: {
         type: String,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
@@ -10,9 +10,9 @@ const userSchema = new mongoose.Schema({
     phone: {type: String},
     password: {type: String},
     image: {type: String},
-    type: {
+    usertype: {
         type: String,
-        enum: ['company', 'normal']
+        enum: ['company', 'user']
     }
 })
 

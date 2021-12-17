@@ -4,9 +4,12 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv")
 const fs = require('fs')
 
-const User = require("../models/user")
+const User = require("../models/user");
+const { Module } = require("module");
 
+//register user account
 exports.register = (req, res) => {
+    console.log(req.body)
     User.find({ email: req.body.email })
         .exec()
         .then(user => {
@@ -31,7 +34,7 @@ exports.register = (req, res) => {
                             password: hash,
                             name: req.body.name,
                             phone: req.body.phone,
-                            type: req.body.type
+                            usertype: req.body.usertype
                         });
 
                         user
@@ -47,9 +50,110 @@ exports.register = (req, res) => {
                                     error: err,
                                     message: "Error creating the user"
                                 })
+                                console.log(err)
                             })
                     }
                 })
             }
         })
 };
+
+//login to account
+exports.login_user =  function (req, res) {
+    console.log(req.body)
+    // first we need email and passord 
+    const email = req.body.email // email should match to body of postman
+    const password = req.body.password
+
+    // we need to check if the username exits or not
+
+    User.findOne({ email: email })
+        .then(function (userdata) {
+            console.log(userdata)
+
+
+            // all the data of email is now in variable userdata
+            if (userdata === null) {
+                // If username is invalid
+                return res.status(403).json({ message: "Invalid login credential" })
+            }
+            // for valid user 
+            bcrypt.compare(password, userdata.password, function (err, result) {
+                if (result === false) {
+                    return res.status(403).json({ message: "invalid password" })
+                }
+
+                // both email and passord is correct
+                // res.send("login succesfull")
+                console.log("login succesfull")
+                // now we need to create token
+                const token = jwt.sign({ YourID: userdata._id }, "anysecretkey");
+                res.status(200).json({
+                    success: true,
+                    token: token,
+                    usertype: userdata.usertype,
+                    data: userdata,
+                    message: "auth success"
+                });
+
+            }
+
+            )
+
+        })
+
+        .catch(function (e) {
+            console.log(e)
+        })
+
+}
+
+//show list of companies
+exports.get_company = (req, res, next) => {
+    User.find({type:'company'}).exec()
+    .then(docs => {
+         const response = {
+         count: docs.length,
+         user: docs.map(doc => {
+         return {
+             email: doc.email,
+             name: doc.name,
+             phone: doc.phone,
+             image: doc.image,
+         };
+     })
+     }
+     res.status(200).json(response);
+     })
+    .catch(err=>{
+        res.status(401).json({
+            error: err
+        })
+    })
+ }
+ 
+// show one company
+exports.showOne = (req, res, next) => {
+    const id = req.params.id;
+    User.findById(id).exec()
+    .then(docs => {
+        const response = {
+            user: {
+                    email: docs.email,
+                    name: docs.name,
+                    phone: docs.phone,
+                    image: docs.image,
+            }
+            }
+            res.status(200).json(response)
+        }  
+    )
+    .catch(err=> {
+        res.status(401).json({
+            error:err
+        })
+        console.log(err);
+    });
+}
+
+
