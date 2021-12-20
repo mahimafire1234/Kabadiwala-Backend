@@ -52,4 +52,9 @@
         //             expect(pp.username).toEqual('rajivkarky')
         //         })
         // });
+
+        it("get one company test", async () => {
+            return User.findById({_id:Object('61b8b62d64c9856d9ea831e7') }
+            )
+        })
     })
