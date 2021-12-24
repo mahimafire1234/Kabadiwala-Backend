@@ -2,12 +2,11 @@ const mongoose = require('mongoose')
 
 const categorySchema = new mongoose.Schema({
     userID: { type: String },
-    rate: [
+    category_rate: [
         {
             price: { type: String },
             category: {
                 type: String,
-                enum: ['bottle', 'plastic', 'glass']
             }
         }
     ]
