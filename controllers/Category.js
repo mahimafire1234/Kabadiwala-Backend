@@ -78,4 +78,21 @@ exports.insertRate = async (req, res, next) => {
     }
 }
 
+//update rate
+exports.update = (req, res, next) => {
+    const category_id = req.params.category_id;
 
+    Category.findByIdAndUpdate(category_id, req.body) //updated by id
+        .exec() //execute
+        .then(result => {
+            res.status(200).json({
+                success: true,
+                message: "Category_rate updated"
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+};
