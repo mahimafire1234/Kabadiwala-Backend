@@ -12,7 +12,7 @@ exports.insertRate = async (request, response) => {
 
     // get user,rate,category,price, id from the request
    const userID = request.body.userID;
-   const rate = request.body.category_rate;
+   const rate = request.body.rate;
    console.log(request.body);
    const category =rate[0].category;
    const price = rate[0].price;
@@ -25,15 +25,15 @@ exports.insertRate = async (request, response) => {
     .then( data => {
             if(data.length >= 1){
 
-                const rateLength = data[0].category_rate.length
+                const rateLength = data[0].rate.length
                 console.log(category)
                 // for array
                 // create an array for categories
                 let categoryarray = []
                 // for loop in the data to push the category in the array above
                 for(let i=0;i<=rateLength-1;i++){
-                    const categoryName = data[0].category_rate[i].category;
-                    categoryarray.push(data[0].category_rate[i].category)
+                    const categoryName = data[0].rate[i].category;
+                    categoryarray.push(data[0].rate[i].category)
                 }
                 // check if category to insert in the above array
                 console.log(categoryarray.includes(category))
@@ -42,7 +42,7 @@ exports.insertRate = async (request, response) => {
                 if(categoryarray.includes(category)){
                     return response.json({success:"false",message:"Value added already"});
                 }else{
-                    user.category_rate.push({
+                    user.rate.push({
                         price,
                         category
                     });
@@ -58,8 +58,8 @@ exports.insertRate = async (request, response) => {
     
             else{
                 const newPriceAdd = Category.create({
-                    "userID":userID,
-                    "category_rate":rate
+                    userID,
+                    rate
                 })
                 return response.json({success:"true",message:"Value added successfully"})
             }
@@ -74,14 +74,13 @@ exports.insertRate = async (request, response) => {
 // get rate for one company
 exports.getRate = (request,response) => {
     // get id from params
-    console.log("got hit")
     const company_id = request.params.id;
     // fetch data in category model:
     try{
         Category.find({userID:company_id}).then(
             (data) => {
                 if(data.length > 0){
-                    response.status(201).send({data:data});
+                    response.send({success:"true",data:data});
                 }
                 else{
                     response.send({success:"false",message:"No items found"});
@@ -120,6 +119,29 @@ exports.updateate = (req, res, next) => {
         })
 }
 
+exports.updateRate = (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
 
+    Category.findByIdAndUpdate(id, req.body) //updated by id
+        .exec() //execute
+        .then(data => {
+            res.status(200).json({
+                success: true,
+                message: "Updated"
+            });
+            console.log(data);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+    // } catch {
+    //     (err) => {
+    //         res.json({ success: "false", message: error })
+    //     }
 
+    // }
+}
 
+};

@@ -81,7 +81,7 @@ exports.getRate = (request,response) => {
         Category.find({userID:company_id}).then(
             (data) => {
                 if(data.length > 0){
-                    response.status(201).send({data:data});
+                    response.send({data:data});
                 }
                 else{
                     response.send({success:"false",message:"No items found"});

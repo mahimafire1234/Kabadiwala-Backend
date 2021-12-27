@@ -13,7 +13,7 @@ router.post('/insertRate', insertRate)
 const categoryController= require('../controllers/Category')
 
 router.post('/insertRate',categoryController.insertRate)
-// router.put('/updateRate', categoryController.updateRate)
+router.put('/updateRate', categoryController.updateRate)
 router.get("/getRate/:id",categoryController.getRate);
 
 module.exports = router
