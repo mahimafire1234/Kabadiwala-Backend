@@ -9,8 +9,8 @@ const bookingSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },
-    date: {type: date},
-    time : {type: time},
+    date: {type: Date},
+    time : {type: String},
     location: {type: String},
     status : {
         type: String,
@@ -23,7 +23,7 @@ const bookingSchema = mongoose.Schema({
             {
                 category: {type: String},
                 amount: {type: Number, default: 0},
-                price: {type: Number}
+                category_price: {type: Number}
             }
         ]
     },

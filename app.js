@@ -26,9 +26,10 @@ app.use((req, res, next) => {
 
 const userRoute = require('./routes/User')
 const categoryRoute = require('./routes/Category')
-
+const bookingRoute = require('./routes/Booking')
 
 app.use('/user', userRoute)
 app.use('/category', categoryRoute)
+app.use('/booking', bookingRoute)
 
 app.listen(5000)
