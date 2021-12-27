@@ -37,6 +37,7 @@ exports.register = (req, res) => {
                             password: hash,
                             name: req.body.name,
                             phone: req.body.phone,
+                            companyLocation:req.body.companyLocation,
                             usertype: req.body.usertype
                         });
 
