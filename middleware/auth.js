@@ -1,5 +1,5 @@
 const jwt= require("jsonwebtoken");
-const user= require("../models/User")
+const User= require("../models/user")
 
 
 //guard
@@ -13,7 +13,7 @@ module.exports.verifyUser = function(req,res,next){
         else{
             const token=  req.headers.authorization.split(" ")[1];
         const data = jwt.verify(token, "anysecretkey");
-        user.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le with respect to id
+        User.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le with respect to id
         .then(function(result){            //aabo result mah tyo id ko sab data xa(like tyo id related usename all )
             if(result){
                 
@@ -23,7 +23,7 @@ module.exports.verifyUser = function(req,res,next){
                 }
                 else{
                     res.json({
-                        message: "Unauthorized"
+                        message: "Unauthorizedd"
                     })
                 }
                 
@@ -64,7 +64,7 @@ module.exports.verifyAdmin = function(req,res,next){
         }
         else{
         const data = jwt.verify(token, "anysecretkey");
-        user.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le
+        User.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le
         .then(function(result){            //aabo result mah tyo id ko sab data xa(like tyo id related usename all )
             if(result){
                 
