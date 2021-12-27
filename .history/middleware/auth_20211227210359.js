@@ -11,6 +11,16 @@ module.exports.verifyUser = function(req,res,next){
         }
         else{
             const token=  req.headers.authorization.split(" ")[1];
+<<<<<<< HEAD
+            const data = jwt.verify(token, "anysecretkey");
+            user.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le with respect to id
+            .then(function(result){            //aabo result mah tyo id ko sab data xa(like tyo id related usename all )
+                if(result){  
+                    if(result.usertype === "user"){
+                        req.userdata = result;
+                        next()
+                    }
+=======
         const data = jwt.verify(token, "anysecretkey");
         User.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le with respect to id
         .then(function(result){            //aabo result mah tyo id ko sab data xa(like tyo id related usename all )
@@ -20,6 +30,7 @@ module.exports.verifyUser = function(req,res,next){
                     req.userdata = result;
                     next()
                 }
+>>>>>>> b0f48c7e666f9ca4bf09a8f545e132f22bcfa63c
                 else{
                     res.json({
                         message: "Unauthorizedd"

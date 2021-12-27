@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     phone: {type: String},
     password: {type: String},
     image: {type: String},
+    companyLocation:{type:String},
     usertype: {
         type: String,
         enum: ['company', 'user']

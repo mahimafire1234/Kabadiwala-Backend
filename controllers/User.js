@@ -3,8 +3,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv")
 const fs = require('fs')
+const auth= require("../middleware/auth")
 
 const User = require("../models/user");
+// const auth = require("../middleware/auth.js");
+
 const { Module } = require("module");
 
 //register user account
@@ -34,6 +37,7 @@ exports.register = (req, res) => {
                             password: hash,
                             name: req.body.name,
                             phone: req.body.phone,
+                            companyLocation:req.body.companyLocation,
                             usertype: req.body.usertype
                         });
 
@@ -42,7 +46,8 @@ exports.register = (req, res) => {
                             .then(result => {
                                 res.status(200).json({
                                     success: true,
-                                    message: "User created successfully"
+                                    message: "User created successfully",
+                                    data:result
                                 })
                             })
                             .catch(err => {
@@ -155,5 +160,21 @@ exports.showOne = (req, res, next) => {
         console.log(err);
     });
 }
+
+//show login company
+exports.login_company=  function(req,res){
+    const id =req.userdata._id;
+    console.log(id);
+    User.findById(id)
+    .then(function (data) {
+        res
+          .status(200)
+          .json({ success: true, data });
+        console.log("company data aayo"+{data});
+      })
+      .catch(function (e) {
+        res.status(500).json({ message: e });
+      });
+    }
 
 
