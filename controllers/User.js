@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv")
 const fs = require('fs')
 
-const User = require("../models/User");
+const User = require("../models/user");
 const { Module } = require("module");
 
 //register user account

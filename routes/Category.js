@@ -10,9 +10,9 @@ router.post('/insertRate', insertRate)
 // router.put('/getRate/:id', getRate)
 
 
-const categoryController= require('../controllers/Category')
+// const categoryController= require('../controllers/Category')
 
-router.post('/insertRate', categoryController.insertRate)
+// router.post('/insertRate', categoryController.insertRate)
 // router.put('/updateRate', categoryController.updateRate)
 // router.get('/getRate/:id', categoryController.getRate)
 
