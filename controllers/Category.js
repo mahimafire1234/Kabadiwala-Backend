@@ -78,21 +78,36 @@ exports.insertRate = async (req, res, next) => {
     }
 }
 
-//update rate
-exports.update = (req, res, next) => {
-    const category_id = req.params.category_id;
+//updateRate
+exports.updateRate = async (req, res, next) => {
+    const category_id = req.body.id
+    console.log(category_id);
+    const category = req.body.category_rate[0].category;
+    const price = req.body.category_rate[0].price;
 
-    Category.findByIdAndUpdate(category_id, req.body) //updated by id
-        .exec() //execute
-        .then(result => {
-            res.status(200).json({
-                success: true,
-                message: "Category_rate updated"
-            });
+    try {
+        const data = await Category.updateOne({
+            id: req.body.id,
+            
+                category: category,
+                price: price
+            }
+        )
+        res.json({
+            success: true,
+            data: data,
+            message: "completed"
+
         })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
-        });
-};
+        console.log("product updated")
+
+    }
+    catch (e) {
+        res.json({
+            message: "error" + e
+        })
+
+    }
+}
+
+
