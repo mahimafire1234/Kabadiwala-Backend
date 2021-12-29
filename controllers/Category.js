@@ -78,20 +78,3 @@ exports.insertRate = async (req, res, next) => {
     }
 }
 
-exports.get_rates = (req, res) => {
-    const id = req.body.id
-
-    Category.findOne({userID: id})
-    .then(result => {
-        res.status(200).json({
-            success: true,
-            result: result
-        })
-    })
-    .catch(err => {
-        res.status(500).json({
-            success: false,
-            message: "Error getting rates"
-        })
-    })
-}
