@@ -115,12 +115,13 @@ exports.login_user =  function (req, res) {
 
 //show list of companies
 exports.get_company = (req, res, next) => {
-    User.find({type:'company'}).exec()
+    User.find({usertype:'company'}).exec()
     .then(docs => {
          const response = {
          count: docs.length,
          user: docs.map(doc => {
          return {
+             _id: doc._id,
              email: doc.email,
              name: doc.name,
              phone: doc.phone,
@@ -128,6 +129,7 @@ exports.get_company = (req, res, next) => {
          };
      })
      }
+     console.log(response)
      res.status(200).json(response);
      })
     .catch(err=>{
@@ -176,5 +178,3 @@ exports.login_company=  function(req,res){
         res.status(500).json({ message: e });
       });
     }
-
-

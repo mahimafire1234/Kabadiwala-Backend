@@ -5,7 +5,7 @@ const router = new express.Router()
 const {insertRate, get_rates, getRate} = require('../controllers/Category')
 
 router.post('/insertRate', insertRate)
-router.get("/getRate/:id",categoryController.getRate);
+router.get("/getRate/:id", getRate);
 
 module.exports = router
 
