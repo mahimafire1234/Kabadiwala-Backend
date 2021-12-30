@@ -4,7 +4,7 @@ const router = new express.Router();
 const auth=require("../middleware/auth")
 // const auth = require("../middleware/auth");
 //require Controllers
-const { register,showOne, get_company,login_company} = require('../controllers/User')
+const { register,showOne, get_company,login_user} = require('../controllers/User')
 
 // router.post('/register', register)
 
@@ -13,7 +13,7 @@ const { register,showOne, get_company,login_company} = require('../controllers/U
 router.post('/register', register)
 router.get('/showOne/:id',showOne)
 router.get('/get_company', get_company)
-router.get("/login_company",auth.verifyAdmin,login_company)
+router.get("/login_user",login_user)
 
 const userController= require('../controllers/User')
 // const { login } = require('../controllers/User')

@@ -115,12 +115,13 @@ exports.login_user =  function (req, res) {
 
 //show list of companies
 exports.get_company = (req, res, next) => {
-    User.find({type:'company'}).exec()
+    User.find({usertype:'company'}).exec()
     .then(docs => {
          const response = {
          count: docs.length,
          user: docs.map(doc => {
          return {
+             id:doc._id,
              email: doc.email,
              name: doc.name,
              phone: doc.phone,
@@ -139,6 +140,7 @@ exports.get_company = (req, res, next) => {
  
 // show one company
 exports.showOne = (req, res, next) => {
+    console.log("hit")
     const id = req.params.id;
     User.findById(id).exec()
     .then(docs => {
@@ -148,6 +150,7 @@ exports.showOne = (req, res, next) => {
                     name: docs.name,
                     phone: docs.phone,
                     image: docs.image,
+                    id:docs._id
             }
             }
             res.status(200).json(response)
@@ -164,13 +167,13 @@ exports.showOne = (req, res, next) => {
 //show login user
 exports.login_user=  function(req,res){
     const id =req.userdata._id;
-    console.log(id);
+    // console.log(id);
     User.findById(id)
     .then(function (data) {
         res
           .status(200)
           .json({ success: true, data });
-        console.log("user data aayo"+{data});
+        // console.log("company data aayo"+{data});
       })
       .catch(function (e) {
         res.status(500).json({ message: e });

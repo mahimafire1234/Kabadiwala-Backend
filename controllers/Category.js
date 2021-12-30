@@ -7,6 +7,7 @@ const fs = require('fs')
 const Category = require("../models/category");
 const { Module } = require("module");
 const { request } = require("http");
+const { response } = require("express");
 //set rate 
 exports.insertRate = async (request, response) => {
 
@@ -82,8 +83,8 @@ exports.getRate = (request, response) => {
     try {
         Category.find({ userID: company_id }).then(
             (data) => {
-                if (data.length > 0) {
-                    response.status(201).send({ data: data });
+                if(data.length > 0){
+                    response.status(200).send({data:data});
                 }
                 else {
                     response.send({ success: "false", message: "No items found" });
@@ -97,12 +98,36 @@ exports.getRate = (request, response) => {
     }
 };
 
-
-//updateRate
-exports.updateRate = async (req, res, next) => {
-    const category_rate_id = req.params.id;
-    console.log(category_rate_id);
-    
+//update the rate 
+exports.updateRate = (req, res) => {
+    // user id
+    const id = req.params.id; 
+    const objectID = req.params.objectID;
+    const price = req.body.price;
+    try{
+        // check if the user exists in the category model
+        Category.find({userID:id}).then(
+            (data) => {
+                if(data.length > 0){
+                    // update category rate data for partciular object id
+                    Category.updateOne({"category_rate._id":objectID},{'$set': {
+                        'category_rate.$.price': price,
+                    }}).then((result)=>{
+                        res.status(201).json({message:result});
+                    }).catch((err)=>{
+                        return res.status(403).json({message:"failed to update" + err});
+                    })
+                
+                }else{
+                    res.status(404).json({error:error});
+                }
+            }
+        )
+    }
+    catch(error){
+        response.status(404).json({error:error});
+    }
+   
 }
 
 
