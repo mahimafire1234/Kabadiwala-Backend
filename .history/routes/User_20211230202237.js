@@ -14,7 +14,7 @@ router.get('/get_company', get_company)
 const userController= require('../controllers/User')
 
 router.post("/login",userController.login_user)
-router.get("/login_company",auth.verifyAdmin,userController.login_company)
+router.get("/login_company",userController.login_company)
 
 module.exports = router
 

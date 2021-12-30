@@ -10,11 +10,11 @@ const { register,showOne, get_company,loggedin_user} = require('../controllers/U
 router.post('/register', register)
 router.get('/showOne/:id',showOne)
 router.get('/get_company', get_company)
+router.get("/login_company",login_company)
 
 const userController= require('../controllers/User')
 
 router.post("/login",userController.login_user)
-router.get("/login_company",auth.verifyAdmin,userController.login_company)
 
 module.exports = router
 

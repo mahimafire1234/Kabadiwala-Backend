@@ -172,7 +172,8 @@ exports.login_company=  function(req,res){
     .then(function (data) {
         res
           .status(200)
-          .json({ success: true, data });
+          .json({ success: true, data 
+        });
         // console.log("company data aayo"+{data});
       })
       .catch(function (e) {
