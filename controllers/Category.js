@@ -100,20 +100,9 @@ exports.getRate = (request, response) => {
 
 //updateRate
 exports.updateRate = async (req, res, next) => {
-    const category_rate_id = req.body.category_rate_id;
-    const userID = request.body.userID;
-    const rate = request.body.category_rate;
-    console.log(request.body);
-    const category = rate[0].category;
-    const price = rate[0].price;
-
-    // Category.find({ userID: req.body.userID }).then(
-    //     Category.find({ _id: category_rate_id })
-    //     .then(
-    //         return response.json({ success: "false", message: "Value added already" });
-    //     )
-    // )
-
+    const category_rate_id = req.params.id;
+    console.log(category_rate_id);
+    
 }
 
 

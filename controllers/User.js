@@ -161,8 +161,8 @@ exports.showOne = (req, res, next) => {
     });
 }
 
-//show login company
-exports.login_company=  function(req,res){
+//show login user
+exports.login_user=  function(req,res){
     const id =req.userdata._id;
     console.log(id);
     User.findById(id)
@@ -170,7 +170,7 @@ exports.login_company=  function(req,res){
         res
           .status(200)
           .json({ success: true, data });
-        console.log("company data aayo"+{data});
+        console.log("user data aayo"+{data});
       })
       .catch(function (e) {
         res.status(500).json({ message: e });
