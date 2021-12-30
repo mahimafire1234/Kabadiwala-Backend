@@ -1,7 +1,7 @@
 const jwt= require("jsonwebtoken");
 const User= require("../models/user")
 
-//guard
+//verify user
 module.exports.verifyUser = function(req,res,next){
     try{
         if(!req.headers.authorization){
@@ -44,6 +44,8 @@ module.exports.verifyUser = function(req,res,next){
         res.status(401).json({error:e})
     }
 }
+
+//verify company (admin)
 module.exports.verifyAdmin = function(req,res,next){
     try{
         const token= req.headers.authorization && req.headers.authorization.split(" ")[1];
@@ -86,3 +88,5 @@ module.exports.verifyAdmin = function(req,res,next){
         res.status(401).json({error:e})
     }
 }
+
+
