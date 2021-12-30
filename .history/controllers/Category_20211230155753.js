@@ -112,9 +112,9 @@ exports.updateRate = (req, res) => {
                     Category.updateOne({"category_rate._id":objectID},{'$set': {
                         'category_rate.$.price': price,
                     }}).then((result)=>{
-                        res.status(201).send({success:true,message:"Updated successfully"});
+                        res.status(201).send({success:true,message:result});
                     }).catch((err)=>{
-                        return res.status(404).send({success:false,message:err});
+                        return res.status(404).send({success:true,message:result});
                     })
                 
                 }else{
