@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var SCHEMA = mongoose.Schema;
 
 const categorySchema = new mongoose.Schema({
     "userID": { type: String },

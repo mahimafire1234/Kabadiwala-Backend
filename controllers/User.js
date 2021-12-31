@@ -6,7 +6,6 @@ const fs = require('fs')
 const auth= require("../middleware/auth")
 
 const User = require("../models/user");
-// const auth = require("../middleware/auth.js");
 
 const { Module } = require("module");
 
@@ -121,7 +120,7 @@ exports.get_company = (req, res, next) => {
          count: docs.length,
          user: docs.map(doc => {
          return {
-             _id: doc._id,
+             id:doc._id,
              email: doc.email,
              name: doc.name,
              phone: doc.phone,
@@ -141,6 +140,7 @@ exports.get_company = (req, res, next) => {
  
 // show one company
 exports.showOne = (req, res, next) => {
+    console.log("hit")
     const id = req.params.id;
     User.findById(id).exec()
     .then(docs => {
@@ -150,6 +150,7 @@ exports.showOne = (req, res, next) => {
                     name: docs.name,
                     phone: docs.phone,
                     image: docs.image,
+                    id:docs._id
             }
             }
             res.status(200).json(response)
@@ -163,16 +164,35 @@ exports.showOne = (req, res, next) => {
     });
 }
 
-//show login company
-exports.login_company=  function(req,res){
+//show logged in company
+exports.loggedin_company=  function(req,res){
+    // console.log("hit");
     const id =req.userdata._id;
-    console.log(id);
+    // console.log(id);
     User.findById(id)
     .then(function (data) {
         res
           .status(200)
           .json({ success: true, data });
-        console.log("company data aayo"+{data});
+        console.log("logged in user data aayo"+{data});
+      })
+      .catch(function (e) {
+        res.status(500).json({ message: e });
+      });
+    }
+
+
+//show logged in user
+exports.loggedin_user=  function(req,res){
+    // console.log("hit");
+    const id =req.userdata._id;
+    // console.log(id);
+    User.findById(id)
+    .then(function (data) {
+        res
+          .status(200)
+          .json({ success: true, data });
+        console.log("logged in user data aayo"+{data});
       })
       .catch(function (e) {
         res.status(500).json({ message: e });
