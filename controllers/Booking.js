@@ -4,17 +4,8 @@ const Booking = require("../models/Booking");
 
 // add a booking
 exports.book = (req, res) => {
-    console.log(req.userdata)
-    const booking = new Booking({
-        _id: mongoose.Types.ObjectId(),
-        company: req.body.company,
-        user: req.userdata._id,
-        date: req.body.date,
-        time: req.body.time,
-        location: req.body.location,
-        items: req.body.items,
-        total_price: req.body.total_price
-    })
+    req.body.user = req.userdata._id;
+    const booking = new Booking(req.body);
 
     booking.save()
     .then(result => {
