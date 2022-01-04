@@ -126,3 +126,30 @@ exports.getapproved = async function(req,res)  {
         res.end()
         }
 
+
+
+
+        exports.change_status=async (req,res)=>{
+    try {
+        const _id =req.params._id
+        const approved_data= await Booking.updateOne(
+            {_id:_id},
+            {status:req.body.status}
+
+
+        )
+        res.json({success:true,data:approved_data})
+        
+
+        
+    } catch (error) {
+        res.status(500).json({
+            error:error,
+            message: "failed to approved"
+        })
+        
+    }
+
+
+
+}
