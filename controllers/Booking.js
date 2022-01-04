@@ -29,3 +29,31 @@ exports.book = (req, res) => {
         })
     })
 }
+
+//view bookings(appointments)
+exports.view_appointments = (req, res, next) => {
+    const user_id = req.params.id;
+    Bookings.find({userID : user_id}).exec()
+    .then(FormData => {
+         const response = {
+         count: FormData.length,
+         appointment: FormData.map(data => {
+         return {
+             status:data.status,
+             user: data.user,
+             date: data.date,
+             time: data.time,
+             location: data.location,
+             items: data.items,
+             total_price: data.total_price,
+         };
+     })
+     }
+     res.status(200).json(response);
+     })
+    .catch(err=>{
+        res.status(401).json({
+            error: err
+        })
+    })
+ }
