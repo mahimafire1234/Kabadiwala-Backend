@@ -41,7 +41,7 @@ exports.insertRate = async (request, response) => {
                     console.log(categoryarray)
                     // condition if yes
                     if (categoryarray.includes(category)) {
-                        return response.json({ success: "false", message: "Value added already" });
+                        return response.json({ success: false, message: "Value added already" });
                     } else {
                         user.category_rate.push({
                             price,
@@ -51,7 +51,7 @@ exports.insertRate = async (request, response) => {
                     }
                     user = user.save();
                     return response.status(201).json({
-                        success: "true",
+                        success: true,
                         message: "Value added successfully"
                     })
                 }
@@ -62,7 +62,7 @@ exports.insertRate = async (request, response) => {
                         "userID": userID,
                         "category_rate": category_rate
                     })
-                    return response.json({ success: "true", message: "Value added successfully" })
+                    return response.json({ success: true, message: "Value added successfully" })
                 }
             }
             );
@@ -87,7 +87,7 @@ exports.getRate = (request, response) => {
                     response.status(200).send({data:data});
                 }
                 else {
-                    response.send({ success: "false", message: "No items found" });
+                    response.send({ success: false, message: "No items found" });
 
                 }
             }

@@ -163,8 +163,8 @@ exports.showOne = (req, res, next) => {
     });
 }
 
-//show logged in user (company & normal user)
-exports.login_company=  function(req,res){
+//show logged in company
+exports.loggedin_company=  function(req,res){
     // console.log("hit");
     const id =req.userdata._id;
     // console.log(id);
@@ -181,3 +181,19 @@ exports.login_company=  function(req,res){
     }
 
 
+//show logged in user
+exports.loggedin_user=  function(req,res){
+    // console.log("hit");
+    const id =req.userdata._id;
+    // console.log(id);
+    User.findById(id)
+    .then(function (data) {
+        res
+          .status(200)
+          .json({ success: true, data });
+        console.log("logged in user data aayo"+{data});
+      })
+      .catch(function (e) {
+        res.status(500).json({ message: e });
+      });
+    }
