@@ -129,15 +129,13 @@ exports.reminder = (req, res) => {
 
     const today = Date.now();
     const date = new Date(today);
-    const now = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-    Booking.find({date: {$gte: Date(now), 
-    status: 'accepted',
+    const now =date.getFullYear() + "-" + (parseInt(date.getMonth()) + 1) + "-" + date.getDate() ;
 
-}})
+    Booking.find({datetime: {$gte: Date(now)}, status: 'accepted', user: req.userdata._id})
     .then(result => {
         res.status(200).json({
             success: true,
-            result :result,
+            result: result,
             message: "Schedule shown"
         })
     })
@@ -148,6 +146,5 @@ exports.reminder = (req, res) => {
         })
     }
     )
-    console.log(now)
  
 }

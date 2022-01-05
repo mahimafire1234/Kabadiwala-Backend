@@ -29,6 +29,6 @@ router
 
 router
 .route('/reminder')
-.get(reminder)
+.get(verifyUser, reminder)
 
 module.exports = router
