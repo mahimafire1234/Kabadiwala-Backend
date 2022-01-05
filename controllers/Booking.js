@@ -121,4 +121,33 @@ exports.getapproved = async function(req,res)  {
 
 
 
+
+
+}
+
+exports.reminder = (req, res) => {
+
+    const today = Date.now();
+    const date = new Date(today);
+    const now = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+    Booking.find({date: {$gte: Date(now), 
+    status: 'accepted',
+
+}})
+    .then(result => {
+        res.status(200).json({
+            success: true,
+            result :result,
+            message: "Schedule shown"
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err,
+            message: "Schedule not found"
+        })
+    }
+    )
+    console.log(now)
+ 
 }
