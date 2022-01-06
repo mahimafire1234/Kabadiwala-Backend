@@ -10,12 +10,12 @@ router
 .post(verifyUser, book)
 
 router
-.route('/')
+.route('/getAllBooks')
 .get(verifyAdmin, getAllBooks)
 
 
 router
-.route('/approved/:_id')
+.route('/approved/:id')
 .put(verifyAdmin, approved)
 
 

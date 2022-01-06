@@ -42,7 +42,7 @@ res.end()
 
 exports.approved=async (req,res)=>{
     try {
-        const _id =req.params._id
+        const _id =req.params.id
         const approved_data= await Booking.updateOne(
             {_id:_id},
             {status:req.body.status}
