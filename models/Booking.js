@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const bookingSchema = mongoose.Schema({
     company: {
         type: mongoose.Schema.Types.ObjectId,
@@ -31,7 +30,5 @@ const bookingSchema = mongoose.Schema({
 {
     timestamps: true
 })
-
 const booking = mongoose.model('booking', bookingSchema)
-
 module.exports = booking
