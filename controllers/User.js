@@ -40,6 +40,8 @@ exports.register = (req, res) => {
                             usertype: req.body.usertype
                         });
 
+                        console.log(user)
+
                         user
                             .save()
                             .then(result => {
@@ -99,6 +101,7 @@ exports.login_user =  function (req, res) {
                     data: userdata,
                     message: "auth success"
                 });
+                
 
             }
 

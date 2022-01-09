@@ -9,14 +9,19 @@ router
 .route('/')
 .post(verifyUser, book)
 
-router
-.route('/')
-.get(verifyAdmin, getAllBooks)
+// router
+// .route('/getAllBooks')
+// .get(verifyAdmin, getAllBooks)
 
-
 router
-.route('/approved/:_id')
+.route('/approved/:id')
 .put(verifyAdmin, approved)
+
+router
+.route('/declined/:id')
+.put(verifyAdmin, declined)
+
+
 
 
 router
@@ -31,4 +36,6 @@ router
 .route('/reminder')
 .get(verifyUser, reminder)
 
+.route('/get_pending')
+.get(verifyAdmin, getPending)
 module.exports = router

@@ -12,7 +12,8 @@ exports.book = (req, res) => {
     .then(result => {
         res.status(200).json({
             success: true,
-            message: "Booking scheduled successfully"
+            message: "Booking scheduled successfully",
+            data:result
         })
     })
     .catch(err => {
@@ -25,27 +26,27 @@ exports.book = (req, res) => {
 
 // get book request
 
-exports.getAllBooks = async function(req,res)  {
-try {
-    const _id = req.userdata._id;
-   const booking = await Booking.find({company:_id}).populate("user")
-   res.json({success:true,data:booking})
-} catch (error) {
-    res.status(500).json({
-        error: error,
-        message: "Failed to get book"
-    })
-}
-res.end()
-}
+// exports.getAllBooks = async function(req,res)  {
+// try {
+//     const _id = req.userdata._id;
+//    const booking = await Booking.find({company:_id}).populate("user")
+//    res.json({success:true,data:booking})
+// } catch (error) {
+//     res.status(500).json({
+//         error: error,
+//         message: "Failed to get book"
+//     })
+// }
+// res.end()
+// }
 
 
 exports.approved=async (req,res)=>{
     try {
-        const _id =req.params._id
+        const _id =req.params.id
         const approved_data= await Booking.updateOne(
             {_id:_id},
-            {status:req.body.status}
+            {status:"accepted"}
 
 
         )
@@ -65,11 +66,39 @@ exports.approved=async (req,res)=>{
 
 }
 
+exports.declined=async (req,res)=>{
+    try {
+        const _id =req.params.id;
+        console.log(req.body.status)
+        const declined_data= await Booking.updateOne(
+            {_id:_id},
+            {status:"rejected"}
+
+        )
+        console.log(declined_data);
+        res.json({success:true,data:declined_data})
+        
+
+        
+    } catch (error) {
+        res.status(500).json({
+            error:error,
+            message: "failed to declined"
+        })
+        
+    }
+
+
+
+}
+
+
 exports.getapproved = async function(req,res)  {
     try {
         const _id = req.userdata._id;
 
-       const approved = await Booking.find({company:_id,status:"accepted"})
+       const approved = await Booking.find({company:_id,status:"accepted"}).populate("user")
+       console.log(approved)
        res.json({success:true,data:approved})
     } catch (error) {
         res.status(500).json({
@@ -80,11 +109,28 @@ exports.getapproved = async function(req,res)  {
     res.end()
     }
 
+    exports.getPending = async function(req,res)  {
+        try {
+            const _id = req.userdata._id;
+    
+           const pending = await Booking.find({company:_id,status:"pending"}).populate("user")
+           console.log(pending)
+           res.json({success:true,data:pending})
+        } catch (error) {
+            res.status(500).json({
+                error: error,
+                message: "Failed to get pending"
+            })
+        }
+        res.end()
+        }
+
     exports.getdeclined = async function(req,res)  {
         try {
             const _id = req.userdata._id;
     
-           const reject = await Booking.find({company:_id,status:"rejected"})
+           const reject = await Booking.find({company:_id,status:"rejected"}).populate("user")
+           console.log(reject)
            res.json({success:true,data:reject})
         } catch (error) {
             res.status(500).json({
