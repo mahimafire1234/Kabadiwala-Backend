@@ -23,7 +23,7 @@ exports.book = (req, res) => {
         })
 }
 
-//view bookings(appointments)
+// client view bookings(appointments)
 exports.view_appointments = (req, res, next) => {
     const user_id = req.params.id;
     console.log(user_id);
@@ -107,6 +107,8 @@ exports.getapproved = async function (req, res) {
     res.end()
 }
 
+
+
 exports.getdeclined = async function (req, res) {
     try {
         const _id = req.userdata._id;
@@ -121,8 +123,6 @@ exports.getdeclined = async function (req, res) {
     }
     res.end()
 }
-
-
 
 
 exports.change_status = async (req, res) => {
@@ -145,7 +145,53 @@ exports.change_status = async (req, res) => {
         })
 
     }
-
-
-
 }
+//client side view approved
+exports.viewapproved = async function (req, res) {
+    try {
+        const _id = req.userdata._id;
+
+        const approved = await Booking.find({ user: _id, status: "accepted" })
+        res.json({ success: true, data: approved })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Failed to get book"
+        })
+    }
+    res.end()
+}
+
+//client side view pending
+exports.viewpending = async function (req, res) {
+    try {
+        const _id = req.userdata._id;
+
+        const pending = await Booking.find({ user: _id, status: "pending" })
+        res.json({ success: true, data: pending })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Failed to get book"
+        })
+    }
+    res.end()
+}
+
+//client side view declined
+exports.viewdeclined = async function (req, res) {
+    try {
+        const _id = req.userdata._id;
+
+        const reject = await Booking.find({ user: _id, status: "rejected" })
+        res.json({ success: true, data: reject })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Failed to get book"
+        })
+    }
+    res.end()
+}
+
+
