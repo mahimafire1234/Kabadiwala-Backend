@@ -24,22 +24,6 @@ exports.book = (req, res) => {
     })
 }
 
-// get book request
-
-// exports.getAllBooks = async function(req,res)  {
-// try {
-//     const _id = req.userdata._id;
-//    const booking = await Booking.find({company:_id}).populate("user")
-//    res.json({success:true,data:booking})
-// } catch (error) {
-//     res.status(500).json({
-//         error: error,
-//         message: "Failed to get book"
-//     })
-// }
-// res.end()
-// }
-
 
 exports.approved=async (req,res)=>{
     try {
