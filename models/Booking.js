@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const bookingSchema = mongoose.Schema({
     company: {
         type: mongoose.Schema.Types.ObjectId,
@@ -9,8 +8,7 @@ const bookingSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },
-    date: {type: Date},
-    time : {type: String},
+    datetime: {type: Date},
     location: {type: String},
     status : {
         type: String,
@@ -32,7 +30,5 @@ const bookingSchema = mongoose.Schema({
 {
     timestamps: true
 })
-
 const booking = mongoose.model('booking', bookingSchema)
-
 module.exports = booking
