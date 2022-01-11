@@ -277,3 +277,35 @@ exports.reminder = (req, res) => {
     )
  
 }
+
+//update bookings
+exports.updateBook = (req, res) => {
+    const id = req.params.id;
+    const booking_id = req.params.booking_id;
+    const date = req.body.date;
+    console.log(date);
+    const time = req.body.time;
+    console.log(time);
+    const location = req.body.location;
+    console.log(location);
+
+    try{
+        Booking.find({user:id}).then(
+            (data)=>{
+                if(data.length>0){
+                    Booking.updateMany({"_id":booking_id},{"datetime":date,"location":location})
+                    .then((result)=>{
+                        res.status(201).send({success:true,message:"Updated successfully"});
+                        
+                    }).catch((err)=>{
+                        return res.status(404).send({success:false,message:err});
+                    })
+                }else{
+                    res.status(404).json({error:error});
+                }
+            }
+        )
+    }catch(error){
+        response.status(404).json({error:error});
+    }
+}
