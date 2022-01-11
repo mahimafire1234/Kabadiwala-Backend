@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-const { book, getAllBooks, approved, getapproved, getdeclined, view_appointments, viewapproved, viewdeclined, viewpending } = require('../controllers/Booking')
+const { book,getPending,approved,getapproved, getdeclined, reminder, view_appointments, viewapproved, viewdeclined, viewpending } = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
