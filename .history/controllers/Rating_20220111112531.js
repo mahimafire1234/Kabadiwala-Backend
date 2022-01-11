@@ -9,7 +9,7 @@ exports.giveRating = async(req,res) => {
 
     try{
         // ratings cannot be more than 5
-        if(ratingCount >5 || Number.isInteger(ratingCount)== false){
+        if(ratingCount >5 ){
             return res.status(400).json({success:false,message:"Invalid"})
         }
         else{
@@ -30,7 +30,7 @@ exports.giveRating = async(req,res) => {
                 let sumFunction = (accumulator,curr) => accumulator + curr
                 // calculate average rating
                 let totalNumOfRatings = company.ratingsGiven.reduce(sumFunction) + ratingCount
-                let ratingToShow = Math.round(totalNumOfRatings/(company.userCount+1))
+                let ratingToShow = totalNumOfRatings/(company.userCount+1)
                 // add the new given rating number to the array of ratings given
                 company.ratingsGiven.push(ratingCount)
                 company.save();

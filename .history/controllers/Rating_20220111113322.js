@@ -30,7 +30,7 @@ exports.giveRating = async(req,res) => {
                 let sumFunction = (accumulator,curr) => accumulator + curr
                 // calculate average rating
                 let totalNumOfRatings = company.ratingsGiven.reduce(sumFunction) + ratingCount
-                let ratingToShow = Math.round(totalNumOfRatings/(company.userCount+1))
+                let ratingToShow = Math.floor(totalNumOfRatings/(company.userCount+1)
                 // add the new given rating number to the array of ratings given
                 company.ratingsGiven.push(ratingCount)
                 company.save();
