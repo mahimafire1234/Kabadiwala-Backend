@@ -53,19 +53,7 @@ exports.giveRating = async(req,res) => {
    
 }
 // get ratings
-exports.getRatings = (req,res) => {
+exports.getRatings = async(req,res) => {
     const company_id = req.params.id;
-    try{
-        ratingModel.findOne({companyId:company_id}).then(
-            (data) => {
-               
-             return res.status(200).json({success:true,data:data})
-                
-            }
-        )
-    }
-    catch(error){
-        return res.status(404).json({success:false,message:error});
-    }
-    
+    ratingModel.findOne({com})
 }

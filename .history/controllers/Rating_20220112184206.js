@@ -58,9 +58,11 @@ exports.getRatings = (req,res) => {
     try{
         ratingModel.findOne({companyId:company_id}).then(
             (data) => {
-               
-             return res.status(200).json({success:true,data:data})
-                
+                if(data.length > 0){
+                    return res.status(200).json({success:true,data:data})
+                }else{
+                    return res.status(404).json({success:false,message:"error"})
+                };
             }
         )
     }

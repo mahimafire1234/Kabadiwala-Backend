@@ -1,6 +1,6 @@
 // model for rating
 const ratingModel = require("../models/Rating");
-// give ratings
+
 exports.giveRating = async(req,res) => {
     const companyId = req.params.id;
     // const userId = req.params.userID;
@@ -30,7 +30,7 @@ exports.giveRating = async(req,res) => {
                 let sumFunction = (accumulator,curr) => accumulator + curr
                 // calculate average rating
                 let totalNumOfRatings = company.ratingsGiven.reduce(sumFunction) + ratingCount
-                let ratingToShow =totalNumOfRatings/(company.userCount+1);
+                let ratingToShow = Math.round(totalNumOfRatings/(company.userCount+1))
                 // add the new given rating number to the array of ratings given
                 company.ratingsGiven.push(ratingCount)
                 company.save();
@@ -51,21 +51,4 @@ exports.giveRating = async(req,res) => {
         res.status(400).send({error:error});
     }
    
-}
-// get ratings
-exports.getRatings = (req,res) => {
-    const company_id = req.params.id;
-    try{
-        ratingModel.findOne({companyId:company_id}).then(
-            (data) => {
-               
-             return res.status(200).json({success:true,data:data})
-                
-            }
-        )
-    }
-    catch(error){
-        return res.status(404).json({success:false,message:error});
-    }
-    
 }
