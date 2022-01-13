@@ -278,118 +278,128 @@ exports.reminder = (req, res) => {
 
 // get book request
 
-exports.getAllBooks = async function(req,res)  {
-try {
-    const _id = req.userdata._id;
-   const booking = await Booking.find({company:_id}).populate("user")
-   res.json({success:true,data:booking})
-} catch (error) {
-    res.status(500).json({
-        error: error,
-        message: "Failed to get book"
-    })
-}
-res.end()
-}
+// exports.getAllBooks = async function(req,res)  {
+// try {
+//     const _id = req.userdata._id;
+//    const booking = await Booking.find({company:_id}).populate("user")
+//    res.json({success:true,data:booking})
+// } catch (error) {
+//     res.status(500).json({
+//         error: error,
+//         message: "Failed to get book"
+//     })
+// }
+// res.end()
+// }
 
 
-exports.approved=async (req,res)=>{
-    try {
-        const _id =req.params._id
-        const approved_data= await Booking.updateOne(
-            {_id:_id},
-            {status:req.body.status}
+// exports.approved=async (req,res)=>{
+//     try {
+//         const _id =req.params._id
+//         const approved_data= await Booking.updateOne(
+//             {_id:_id},
+//             {status:req.body.status}
 
 
-        )
-        res.json({success:true,data:approved_data})
+//         )
+//         res.json({success:true,data:approved_data})
         
 
         
-    } catch (error) {
-        res.status(500).json({
-            error:error,
-            message: "failed to approved"
-        })
+//     } catch (error) {
+//         res.status(500).json({
+//             error:error,
+//             message: "failed to approved"
+//         })
         
-    }
-<<<<<<< HEAD
-    )
- 
-}
+//     }
+
 
 exports.get_one = async (req, res) => {
     // const Booking.find(req.params.usertype: req.params.id)
-    const usertype = req.params.usertype
-    const id = req.params.id
-    if(usertype == "company"){
-        await Booking.find({company: id,status:"completed"})
-    }
-    else{
-        await Booking.find({user: id,status:"completed"})
-    }
+    try{
+        const usertype = req.params.usertype
+        const id = req.params.id
+        if(usertype == "company"){
+          const data=  await Booking.find({company: id,status:"completed"})
+          res.json({success:true,data:data})
+        }
+        else{
+            const userdata =await Booking.find({user: id,status:"completed"})
+            res.json({success:true,data:userdata})
+        }
 
-=======
+      
 
-
-
-}
-
-exports.getapproved = async function(req,res)  {
-    try {
-        const _id = req.userdata._id;
-
-       const approved = await Booking.find({company:_id,status:"accepted"})
-       res.json({success:true,data:approved})
-    } catch (error) {
+    }catch{
         res.status(500).json({
-            error: error,
-            message: "Failed to get book"
-        })
+                        error: error,
+                        message: "Failed toview transition"
+                    })
+
     }
+
     res.end()
-    }
-
-    exports.getdeclined = async function(req,res)  {
-        try {
-            const _id = req.userdata._id;
-    
-           const reject = await Booking.find({company:_id,status:"rejected"})
-           res.json({success:true,data:reject})
-        } catch (error) {
-            res.status(500).json({
-                error: error,
-                message: "Failed to get book"
-            })
-        }
-        res.end()
-        }
-
-
-
-
-        exports.change_status=async (req,res)=>{
-    try {
-        const _id =req.params._id
-        const approved_data= await Booking.updateOne(
-            {_id:_id},
-            {status:req.body.status}
-
-
-        )
-        res.json({success:true,data:approved_data})
-        
-
-        
-    } catch (error) {
-        res.status(500).json({
-            error:error,
-            message: "failed to approved"
-        })
-        
-    }
-
-
-
->>>>>>> 02525aa45a87f3055d2dcbec1819afea9c9b60db
 }
+    
+  
+
+// }
+
+// exports.getapproved = async function(req,res)  {
+//     try {
+//         const _id = req.userdata._id;
+
+//        const approved = await Booking.find({company:_id,status:"accepted"})
+//        res.json({success:true,data:approved})
+//     } catch (error) {
+//         res.status(500).json({
+//             error: error,
+//             message: "Failed to get book"
+//         })
+//     }
+//     res.end()
+//     }
+
+//     exports.getdeclined = async function(req,res)  {
+//         try {
+//             const _id = req.userdata._id;
+    
+//            const reject = await Booking.find({company:_id,status:"rejected"})
+//            res.json({success:true,data:reject})
+//         } catch (error) {
+//             res.status(500).json({
+//                 error: error,
+//                 message: "Failed to get book"
+//             })
+//         }
+//         res.end()
+//         }
+
+
+
+
+//         exports.change_status=async (req,res)=>{
+//     try {
+//         const _id =req.params._id
+//         const approved_data= await Booking.updateOne(
+//             {_id:_id},
+//             {status:req.body.status}
+
+
+//         )
+//         res.json({success:true,data:approved_data})
+        
+
+        
+//     } catch (error) {
+//         res.status(500).json({
+//             error:error,
+//             message: "failed to approved"
+//         })
+        
+//     }
+
+
+
+
