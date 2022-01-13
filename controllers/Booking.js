@@ -282,21 +282,15 @@ exports.reminder = (req, res) => {
 exports.updateBook = (req, res) => {
     const id = req.params.id;
     const booking_id = req.params.booking_id;
-    const date = req.body.date;
-    console.log(date);
-    const time = req.body.time;
-    console.log(time);
-    const location = req.body.location;
-    console.log(location);
 
     try{
         Booking.find({user:id}).then(
             (data)=>{
                 if(data.length>0){
-                    Booking.updateMany({"_id":booking_id},{"datetime":date,"location":location})
+                    Booking.findByIdAndUpdate({"_id":booking_id},{$set: req.body}, { new: true }).exec()
                     .then((result)=>{
                         res.status(201).send({success:true,message:"Updated successfully"});
-                        
+                        console.log(data);
                     }).catch((err)=>{
                         return res.status(404).send({success:false,message:err});
                     })
