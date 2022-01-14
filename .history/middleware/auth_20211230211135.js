@@ -59,9 +59,16 @@ module.exports.verifyAdmin = function(req,res,next){
         User.findOne({_id: data.YourID})   /// database mah gayera check garxa findONe le
         .then(function(result){            //aabo result mah tyo id ko sab data xa(like tyo id related usename all )
             if(result){    
+                if(result.usertype === "company"){
                     req.userdata = result;
+
                     next()
-                
+                }
+                else{
+                    res.json({
+                        message: "Unauthorized"
+                    })
+                }
             }else{
                 res.json({
                     message:"company not  found"

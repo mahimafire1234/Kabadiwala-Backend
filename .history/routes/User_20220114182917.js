@@ -10,8 +10,8 @@ const { register,showOne, get_company,loggedin_company,loggedin_user} = require(
 router.post('/register', register)
 router.get('/showOne/:id',showOne)
 router.get('/get_company', get_company)
-router.get("/loggedin_company",auth.verifyAdmin,loggedin_company)
-// router.get("/loggedin_user",auth.verifyUser,loggedin_user)
+router.get("/loggedin_company",,loggedin_company)
+router.get("/loggedin_user",auth.verifyUser,loggedin_user)
 
 
 

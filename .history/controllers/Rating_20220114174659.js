@@ -6,7 +6,7 @@ exports.giveRating = async(req,res) => {
     // const userId = req.params.userID;
     const ratingCount = req.body.rating;
     let company = await ratingModel.findOne({companyID:companyId});
-    console.log(req.body.rating);
+
     try{
         // ratings cannot be more than 5
         if(ratingCount >5 || Number.isInteger(ratingCount)== false){

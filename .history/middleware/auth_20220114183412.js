@@ -60,6 +60,7 @@ module.exports.verifyAdmin = function(req,res,next){
         .then(function(result){            //aabo result mah tyo id ko sab data xa(like tyo id related usename all )
             if(result){    
                     req.userdata = result;
+
                     next()
                 
             }else{
