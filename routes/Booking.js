@@ -52,5 +52,5 @@ module.exports = router
 //update booking
 router
     .route('/updateBook/:id/:booking_id')
-    .put(verifyUser, updateBook)
+    .put(updateBook)
 module.exports = router
