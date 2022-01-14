@@ -2,14 +2,14 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-const { book,getPending,approved,getapproved, getdeclined, reminder, view_appointments, viewapproved, viewdeclined, viewpending,updateBook} = require('../controllers/Booking')
+const { book,getPending,approved,getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending,updateBook} = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
     .route('/')
     .post(verifyUser, book)
 
-router.get('/viewAppointments/:id', view_appointments)
+// router.get('/viewAppointments/:id', view_appointments)
 // router
 // .route('/viewAppointments/:id')
 // get(view_appointments)
