@@ -41,7 +41,7 @@ exports.insertRate = async (request, response) => {
                     console.log(categoryarray)
                     // condition if yes
                     if (categoryarray.includes(category)) {
-                        return response.json({ success: "false", message: "Value added already" });
+                        return response.json({ success: false, message: "Value added already" });
                     } else {
                         user.category_rate.push({
                             price,
@@ -51,7 +51,7 @@ exports.insertRate = async (request, response) => {
                     }
                     user = user.save();
                     return response.status(201).json({
-                        success: "true",
+                        success: true,
                         message: "Value added successfully"
                     })
                 }
@@ -62,7 +62,7 @@ exports.insertRate = async (request, response) => {
                         "userID": userID,
                         "category_rate": category_rate
                     })
-                    return response.json({ success: "true", message: "Value added successfully" })
+                    return response.json({ success: true, message: "Value added successfully" })
                 }
             }
             );
@@ -84,10 +84,10 @@ exports.getRate = (request, response) => {
         Category.find({ userID: company_id }).then(
             (data) => {
                 if(data.length > 0){
-                    response.status(200).send({data:data});
+                    response.status(200).send({success:true,data:data});
                 }
                 else {
-                    response.send({ success: "false", message: "No items found" });
+                    response.status(404).send({ success: false, message: "No items found" });
 
                 }
             }
@@ -104,6 +104,7 @@ exports.updateRate = (req, res) => {
     console.log(req.body);
     const id = req.params.id; 
     const objectID = req.params.objectID;
+
     const price = req.body.price;
     try{
         // check if the user exists in the category model
@@ -113,10 +114,10 @@ exports.updateRate = (req, res) => {
                     // update category rate data for partciular object id
                     Category.updateOne({"category_rate._id":objectID},{'$set': {
                         'category_rate.$.price': price,
-                    }}).then((result)=>{
-                        res.status(201).send({success:true,message:"Updated successfully"});
+                    }}).then(()=>{
+                        return res.status(201).json({success:true,message:"Updated successfully"});
                     }).catch((err)=>{
-                        return res.status(404).send({success:false,message:err});
+                        return res.status(404).json({success:false,message:err});
                     })
                 
                 }else{

@@ -2,44 +2,64 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-const { book,getPending,approved,getapproved, getdeclined,  declined, reminder, update } = require('../controllers/Booking')
+const { book,getPending,approved,getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending,updateBook} = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
-.route('/')
-.post(verifyUser, book)
+    .route('/')
+    .post(verifyUser, book)
 
 router
 .route('/update/:id')
 .put(verifyAdmin, update)
 
+// router.get('/viewAppointments/:id', view_appointments)
 // router
-// .route('/getAllBooks')
-// .get(verifyAdmin, getAllBooks)
+// .route('/viewAppointments/:id')
+// get(view_appointments)
+
 
 router
-.route('/approved/:id')
-.put(verifyAdmin, approved)
+    .route('/approved/:_id')
+    .put(verifyAdmin, approved)
+
 
 router
-.route('/declined/:id')
-.put(verifyAdmin, declined)
+    .route('/get_approved')
+    .get(verifyAdmin, getapproved)
+module.exports = router
 
 router
-.route('/get_approved')
-.get(verifyAdmin, getapproved)
+    .route('/get_decline')
+    .get(verifyAdmin, getdeclined)
+module.exports = router
 
+//client side view status
+//view approved
 router
-.route('/get_decline')
-.get(verifyAdmin, getdeclined)
+    .route('/view_approved')
+    .get(verifyUser, viewapproved)
+module.exports = router
 
+//view declined
 router
-.route('/reminder')
-.get(verifyUser, reminder)
+    .route('/view_declined')
+    .get(verifyUser, viewdeclined)
+module.exports = router
+
+//view pending
+router
+    .route('/view_pending')
+    .get(verifyUser, viewpending)
+module.exports = router
 
 router
 .route('/get_pending')
 .get(verifyAdmin, getPending)
 
 
+//update booking
+router
+    .route('/updateBook/:id/:booking_id')
+    .put(updateBook)
 module.exports = router

@@ -177,7 +177,7 @@ exports.loggedin_company=  function(req,res){
         res
           .status(200)
           .json({ success: true, data });
-        console.log("logged in user data aayo"+{data});
+        // console.log("company data aayo"+{data});
       })
       .catch(function (e) {
         res.status(500).json({ message: e });

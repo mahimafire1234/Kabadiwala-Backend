@@ -27,9 +27,11 @@ app.use((req, res, next) => {
 const userRoute = require('./routes/User')
 const categoryRoute = require('./routes/Category')
 const bookingRoute = require('./routes/Booking')
+const ratingRoute =  require("./routes/Rating")
 
 app.use('/user', userRoute)
 app.use('/category', categoryRoute)
 app.use('/booking', bookingRoute)
+app.use("/rate",ratingRoute);
 
 app.listen(5000)
