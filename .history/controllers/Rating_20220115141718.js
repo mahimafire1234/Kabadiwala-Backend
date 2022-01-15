@@ -39,7 +39,7 @@ exports.giveRating = async(req,res) => {
                     "rating":ratingToShow.toFixed(1),
                     "userCount":company.userCount+1,
                 }}).then(()=>{
-                    res.status(200).json({success:true,message:"Ratings given successfully"})
+                    res.status(200).json({success:true,message:"Ratings  successfully"})
                 }).catch(
                     (error) => 
                     console.log(error))

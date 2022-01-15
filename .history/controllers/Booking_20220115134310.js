@@ -111,6 +111,7 @@ exports.getapproved = async function (req, res) {
 exports.getPending = async function (req, res) {
     try {
         const _id = req.userdata._id;
+
         const pending = await Booking.find({ company: _id, status: "pending" }).populate("user")
         console.log(pending)
         res.json({ success: true, data: pending })
@@ -138,6 +139,7 @@ exports.getdeclined = async function (req, res) {
     }
     res.end()
 }
+
 
 exports.getdeclined = async function (req, res) {
     try {
@@ -208,22 +210,6 @@ exports.viewpending = async function (req, res) {
     res.end()
 }
 
-
-exports.update = (req, res) => {
-    Booking.findByIdAndUpdate(req.params.id, req.body)
-        .then(result => {
-            res.status(200).json({
-                success: true,
-                message: "Booking updated successfully"
-            })
-        })
-        .catch(error => {
-            res.status(500).json({
-                error: err,
-                message: "Booking updated failed"
-            })
-        })
-    }
 //client side view declined
 exports.viewdeclined = async function (req, res) {
     try {

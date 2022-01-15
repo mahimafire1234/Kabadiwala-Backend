@@ -2,12 +2,16 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-const { book,getPending,approved,getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending,updateBook} = require('../controllers/Booking')
+const { book, getPending, approved, getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update } = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
     .route('/')
     .post(verifyUser, book)
+
+router
+    .route('/update/:id')
+    .put(verifyAdmin, update)
 
 // router.get('/viewAppointments/:id', view_appointments)
 // router
@@ -52,8 +56,17 @@ router
     .get(verifyUser, viewpending)
 module.exports = router
 
+router
+    .route('/get_pending')
+    .get(verifyAdmin, getPending)
+
+
 //update booking
 router
     .route('/updateBook/:id/:booking_id')
     .put(updateBook)
+
+router
+    .route('/reminder')
+    .get(verifyUser, reminder)
 module.exports = router
