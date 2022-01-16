@@ -6,7 +6,7 @@ exports.giveRating = async(req,res) => {
     // const userId = req.params.userID;
     const ratingCount = req.body.rating;
     let company = await ratingModel.findOne({companyID:companyId});
-
+    console.log(req.body.rating);
     try{
         // ratings cannot be more than 5
         if(ratingCount >5 || Number.isInteger(ratingCount)== false){
@@ -42,13 +42,13 @@ exports.giveRating = async(req,res) => {
                     res.status(200).json({success:true,message:"Added successfully"})
                 }).catch(
                     (error) => 
-                    zconsole.log(error))
+                    console.log(error))
             }
         }
   
     }
     catch(error){
-        res.status(400).send({error:error});
+        res.status(400).send({success:false,error:error});
     }
    
 }

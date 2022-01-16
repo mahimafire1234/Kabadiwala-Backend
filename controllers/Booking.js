@@ -23,33 +23,6 @@ exports.book = (req, res) => {
         })
 }
 
-// client view bookings(appointments)
-exports.view_appointments = (req, res, next) => {
-    const user_id = req.params.id;
-    console.log(user_id);
-
-    try {
-        Booking.find({ user: user_id }).exec()
-            .then(
-                (data) => {
-                    if (data.length > 0) {
-                        console.log(data);
-                        res.status(200).send({ data: data });
-                    }
-                    else {
-                        response.send({ success: "false", message: "You have no appointments" });
-
-                    }
-
-                }
-            )
-
-    } catch (error) {
-        response.status(404).json({ error: error })
-    }
-}
-
-
 // get book request
 
 exports.getAllBooks = async function (req, res) {
@@ -69,16 +42,14 @@ exports.getAllBooks = async function (req, res) {
 
 exports.approved = async (req, res) => {
     try {
-        const _id =req.params.id
-        // console.log("route hit vayo =>",_id)
-        const approved_data= await Booking.updateOne(
-            {_id:_id},
-            {status:"accepted"}
+        const _id = req.params.id
+        const approved_data = await Booking.updateOne(
+            { _id: _id },
+            { status: "accepted" }
 
 
         )
         res.json({ success: true, data: approved_data })
-
 
 
 
@@ -94,26 +65,26 @@ exports.approved = async (req, res) => {
 
 }
 
-exports.declined=async (req,res)=>{
+exports.declined = async (req, res) => {
     try {
-        const _id =req.params.id;
+        const _id = req.params.id;
         console.log(req.body.status)
-        const declined_data= await Booking.updateOne(
-            {_id:_id},
-            {status:"rejected"}
+        const declined_data = await Booking.updateOne(
+            { _id: _id },
+            { status: "rejected" }
 
         )
         console.log(declined_data);
-        res.json({success:true,data:declined_data})
-        
+        res.json({ success: true, data: declined_data })
 
-        
+
+
     } catch (error) {
         res.status(500).json({
-            error:error,
+            error: error,
             message: "failed to declined"
         })
-        
+
     }
 
 
@@ -121,13 +92,13 @@ exports.declined=async (req,res)=>{
 }
 
 
-exports.getapproved = async function(req,res)  {
+exports.getapproved = async function (req, res) {
     try {
         const _id = req.userdata._id;
 
-       const approved = await Booking.find({company:_id,status:"accepted"}).populate("user")
-       console.log(approved)
-       res.json({success:true,data:approved})
+        const approved = await Booking.find({ company: _id, status: "accepted" }).populate("user")
+        console.log(approved)
+        res.json({ success: true, data: approved })
     } catch (error) {
         res.status(500).json({
             error: error,
@@ -137,37 +108,51 @@ exports.getapproved = async function(req,res)  {
     res.end()
 }
 
-    exports.getPending = async function(req,res)  {
-        try {
-            const _id = req.userdata._id;
-    
-           const pending = await Booking.find({company:_id,status:"pending"}).populate("user")
-           console.log(pending)
-           res.json({success:true,data:pending})
-        } catch (error) {
-            res.status(500).json({
-                error: error,
-                message: "Failed to get pending"
-            })
-        }
-        res.end()
-        }
+exports.getPending = async function (req, res) {
+    try {
+        const _id = req.userdata._id;
+        const pending = await Booking.find({ company: _id, status: "pending" }).populate("user")
+        console.log(pending)
+        res.json({ success: true, data: pending })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Failed to get pending"
+        })
+    }
+    res.end()
+}
 
-    exports.getdeclined = async function(req,res)  {
-        try {
-            const _id = req.userdata._id;
-    
-           const reject = await Booking.find({company:_id,status:"rejected"}).populate("user")
-           console.log(reject)
-           res.json({success:true,data:reject})
-        } catch (error) {
-            res.status(500).json({
-                error: error,
-                message: "Failed to get book"
-            })
-        }
-        res.end()
-        }
+exports.getdeclined = async function (req, res) {
+    try {
+        const _id = req.userdata._id;
+
+        const reject = await Booking.find({ company: _id, status: "rejected" }).populate("user")
+        console.log(reject)
+        res.json({ success: true, data: reject })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Failed to get book"
+        })
+    }
+    res.end()
+}
+
+exports.getdeclined = async function (req, res) {
+    try {
+        const _id = req.userdata._id;
+
+        const reject = await Booking.find({ company: _id, status: "rejected" })
+        res.json({ success: true, data: reject })
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "Failed to get book"
+        })
+    }
+    res.end()
+}
 
 
 exports.change_status = async (req, res) => {
@@ -223,6 +208,22 @@ exports.viewpending = async function (req, res) {
     res.end()
 }
 
+
+exports.update = (req, res) => {
+    Booking.findByIdAndUpdate(req.params.id, req.body)
+        .then(result => {
+            res.status(200).json({
+                success: true,
+                message: "Booking updated successfully"
+            })
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: err,
+                message: "Booking updated failed"
+            })
+        })
+    }
 //client side view declined
 exports.viewdeclined = async function (req, res) {
     try {
@@ -244,49 +245,50 @@ exports.reminder = (req, res) => {
 
     const today = Date.now();
     const date = new Date(today);
-    const now =date.getFullYear() + "-" + (parseInt(date.getMonth()) + 1) + "-" + date.getDate() ;
+    const now = date.getFullYear() + "-" + (parseInt(date.getMonth()) + 1) + "-" + date.getDate();
 
-    Booking.find({datetime: {$gte: Date(now)}, status: 'accepted', user: req.userdata._id})
-    .then(result => {
-        res.status(200).json({
-            success: true,
-            result: result,
-            message: "Schedule shown"
+    Booking.find({ datetime: { $gte: Date(now) }, status: 'accepted', user: req.userdata._id })
+        .then(result => {
+            res.status(200).json({
+                success: true,
+                result: result,
+                message: "Schedule shown"
+            })
         })
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err,
-            message: "Schedule not found"
-        })
-    })
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "Schedule not found"
+            })
+        }
+        )
+
 }
 
+//update bookings
+exports.updateBook = (req, res) => {
+    const id = req.params.id;
+    const booking_id = req.params.booking_id;
 
-exports.get_one = async (req, res) => {
-    try{
-        const usertype = req.params.usertype
-        const id = req.params.id
-        if(usertype == "company"){
-          const data=  await Booking.find({company: id,status:"completed"}).populate("user company")
-          res.json({success:true,data:data})
-        }
-        else{
-            const userdata =await Booking.find({user: id,status:"completed"}).populate("user company")
-            res.json({success:true,data:userdata})
-        }
-
-      
-
-    }catch(error){
-        res.status(500).json({
-                        error: error,
-                        message: "Failed toview transition"
-                    })
-
+    try {
+        Booking.find({ user: id }).then(
+            (data) => {
+                if (data.length > 0) {
+                    Booking.findByIdAndUpdate({ "_id": booking_id }, { $set: req.body }, { new: true }).exec()
+                        .then((result) => {
+                            res.status(201).send({ success: true, message: "Updated successfully" });
+                            console.log(data);
+                        }).catch((err) => {
+                            return res.status(404).send({ success: false, message: err });
+                        })
+                } else {
+                    res.status(404).json({ error: error });
+                }
+            }
+        )
+    } catch (error) {
+        response.status(404).json({ error: error });
     }
-
-    res.end()
 }
     
   
@@ -346,7 +348,3 @@ exports.get_one = async (req, res) => {
 //         })
         
 //     }
-
-
-
-
