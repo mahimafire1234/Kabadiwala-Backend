@@ -13,8 +13,12 @@ router
 
 
 router
-.route('/approved/:_id')
+.route('/approved/:id')
 .put(verifyAdmin, approved)
+
+router
+.route('/declined/:id')
+.put(verifyAdmin, declined)
 
 
 router
