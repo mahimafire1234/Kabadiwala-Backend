@@ -6,18 +6,17 @@ exports.giveRating = async(req,res) => {
     console.log(companyId);
     // const userId = req.params.userID;
     const ratingCount = req.body.rating;
-    let company = await ratingModel.findOne({companyId:companyId});
+    let company = await ratingModel.findOne({companyID:companyId});
     console.log(req.body.rating);
     try{
-          // ratings cannot be more than 5
-          if(ratingCount >5 || Number.isInteger(ratingCount)== false){
-                return res.status(400).json({success:false,message:"Invalid"})
-            }
-        ratingModel.find({companyId:companyId})
+        //   // ratings cannot be more than 5
+        //   if(ratingCount >5 || Number.isInteger(ratingCount)== false){
+        //         return res.status(400).json({success:false,message:"Invalid"})
+        //     }
+        ratingModel.find({companyID:companyId})
         .then(
             (data)=>{
             if(data.length >=1){
-                console.log(data);
                        // get sum of all the rating given
                        let sumFunction = (accumulator,curr) => accumulator + curr
                        // calculate average rating
@@ -44,7 +43,7 @@ exports.giveRating = async(req,res) => {
                     "ratingsGiven":ratingCount
             })
             return res.status(200).json({success:true,message:"Added successfully"})
-        }
+
         }
         );
     }

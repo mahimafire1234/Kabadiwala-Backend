@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-const { book, getPending, approved, getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update } = require('../controllers/Booking')
+const { book, getPending, approved, getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined} = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
@@ -20,8 +20,12 @@ router
 
 
 router
-    .route('/approved/:_id')
-    .put(verifyAdmin, approved)
+.route('/approved/:id')
+.put(verifyAdmin, approved)
+
+router
+.route('/declined/:id')
+.put(verifyAdmin, declined)
 
 router
 .route('/approved/:_id')
