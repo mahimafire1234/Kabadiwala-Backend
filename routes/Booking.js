@@ -27,9 +27,7 @@ router
 .route('/declined/:id')
 .put(verifyAdmin, declined)
 
-router
-.route('/approved/:_id')
-.put(verifyAdmin, approved)
+
 
 router
     .route('/get_approved')
