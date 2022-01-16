@@ -24,6 +24,18 @@ exports.book = (req, res) => {
 }
 
 // get book request
+exports.get_one = async (req, res) => {
+    // const Booking.find(req.params.usertype: req.params.id)
+    const usertype = req.params.usertype
+    const id = req.params.id
+    if(usertype == "company"){
+        await Booking.find({company: id,status:"completed"})
+    }
+    else{
+        await Booking.find({user: id,status:"completed"})
+    }
+
+}
 
 exports.getAllBooks = async function (req, res) {
     try {
