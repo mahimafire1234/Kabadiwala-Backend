@@ -30,11 +30,11 @@ exports.get_one = async (req, res) => {
         const usertype = req.params.usertype
         const id = req.params.id
         if(usertype == "company"){
-            const data=  await Booking.find({company: id,status:"completed"})
+            const data=  await Booking.find({company: id,status:"completed"}).populate("user company")
             res.json({success:true,data:data})
           }
           else{
-            const userdata =await Booking.find({user: id,status:"completed"})
+            const userdata =await Booking.find({user: id,status:"completed"}).populate("user company")
             res.json({success:true,data:userdata})
         }
 
