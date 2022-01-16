@@ -23,18 +23,28 @@ exports.book = (req, res) => {
         })
 }
 
-// get book request
+// view transaction
 exports.get_one = async (req, res) => {
     // const Booking.find(req.params.usertype: req.params.id)
-    const usertype = req.params.usertype
-    const id = req.params.id
-    if(usertype == "company"){
-        await Booking.find({company: id,status:"completed"})
-    }
-    else{
-        await Booking.find({user: id,status:"completed"})
-    }
+    try{
+        const usertype = req.params.usertype
+        const id = req.params.id
+        if(usertype == "company"){
+            const data=  await Booking.find({company: id,status:"completed"})
+            res.json({success:true,data:data})
+          }
+          else{
+            const userdata =await Booking.find({user: id,status:"completed"})
+            res.json({success:true,data:userdata})
+        }
 
+    }catch{ res.status(500).json({      error: error,
+        message: "Failed toview transition"
+    })
+
+    }
+   
+    res.end()
 }
 
 exports.getAllBooks = async function (req, res) {

@@ -13,7 +13,7 @@ router
     .route('/update/:id')
     .put(verifyAdmin, update)
 
-    router
+router
     .route('/get_payment/:usertype/:id')
     .get(get_one)
 
