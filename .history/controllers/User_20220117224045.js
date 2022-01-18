@@ -201,6 +201,4 @@ exports.loggedin_user=  function(req,res){
       .catch(function (e) {
         res.status(500).json({ message: e });
       });
-      res.end()
-
     }

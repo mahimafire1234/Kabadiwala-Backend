@@ -66,6 +66,7 @@ exports.addFavorites = async (request,response)=>{
 // get the favorites item
 exports.getFavorites= async (request,response) => {
     // get user id
+    console.log("hit")
     const userId = request.params.id;
     // check if user exists
     try{

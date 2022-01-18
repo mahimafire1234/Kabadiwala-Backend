@@ -4,7 +4,6 @@ const User = require("../models/user");
 
 // routes
 exports.addFavorites = async (request,response)=>{
-    console.log("hit")
 
     // get user and company id
     const id =  request.params.id;

@@ -4,7 +4,6 @@ const User = require("../models/user");
 
 // routes
 exports.addFavorites = async (request,response)=>{
-    console.log("hit")
 
     // get user and company id
     const id =  request.params.id;
@@ -63,22 +62,3 @@ exports.addFavorites = async (request,response)=>{
 
 };
 
-// get the favorites item
-exports.getFavorites= async (request,response) => {
-    // get user id
-    const userId = request.params.id;
-    // check if user exists
-    try{
-        // if user exists in the favorites model and the product kength for that user us greater than 0
-        const favoriteItem = await FavoritesModel.findOne({id:userId})
-        if(favoriteItem && favoriteItem.company.length >0){
-            return response.send({success:true,favoriteItem:favoriteItem})
-        }else{
-            response.send(null)
-        }
-    }
-    catch(error) 
-        { response.status(404).json({success : "false" , error:error})
-        }
-
-};
