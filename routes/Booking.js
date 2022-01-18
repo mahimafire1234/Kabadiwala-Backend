@@ -2,7 +2,9 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-const { book, getPending, approved, getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined,get_one} = require('../controllers/Booking')
+    
+  
+const { book, getPending, approved, getapproved,getallBooks, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined,get_one} = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
@@ -16,6 +18,11 @@ router
 router
     .route('/get_payment/:usertype/:id')
     .get(get_one)
+
+    router
+    .route('/getAllBooking')
+    .get(getallBooks)
+
 
 // router.get('/viewAppointments/:id', view_appointments)
 // router

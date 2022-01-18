@@ -47,10 +47,10 @@ exports.get_one = async (req, res) => {
     res.end()
 }
 
-exports.getAllBooks = async function (req, res) {
+exports.getallBooks = async function (req, res) {
     try {
-        const _id = req.userdata._id;
-        const booking = await Booking.find({ company: _id }).populate("user")
+        // const _id = req.userdata._id;
+        const booking = await Booking.find({status:"pending"}).populate("user company")
         res.json({ success: true, data: booking })
     } catch (error) {
         res.status(500).json({
@@ -60,7 +60,6 @@ exports.getAllBooks = async function (req, res) {
     }
     res.end()
 }
-
 
 exports.approved = async (req, res) => {
     try {
