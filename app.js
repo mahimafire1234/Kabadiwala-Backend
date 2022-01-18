@@ -7,6 +7,7 @@ require('./db/db_connection')
 const app = express()
 
 app.use(morgan("dev"));
+app.use('/files', express.static('files'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

@@ -17,10 +17,12 @@ router.get("/loggedin_user",auth.verifyUser,loggedin_user)
 router
 .route('/')
 .patch(auth.verifyLoggedIn, upload.single('image'), update)
+.get(auth.verifyLoggedIn, (req, res) => res.status(200).json({success: true, data: req.userdata}))
 
 router
 .route('/password')
 .patch(auth.verifyLoggedIn, change_password)
+
 
 const userController= require('../controllers/User')
 
