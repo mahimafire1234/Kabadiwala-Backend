@@ -1,3 +1,4 @@
+const { status } = require("express/lib/response");
 const res = require("express/lib/response");
 const mongoose = require("mongoose");
 
@@ -52,7 +53,7 @@ exports.get_one = async (req, res) => {
 exports.getallBooks = async function (req, res) {
     try {
         // const _id = req.userdata._id;
-        const booking = await Booking.find().populate("user company")
+        const booking = await Booking.find({status:"pending"}).populate("user company")
         res.json({ success: true, data: booking })
     } catch (error) {
         res.status(500).json({
