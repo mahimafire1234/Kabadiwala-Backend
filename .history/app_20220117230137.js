@@ -28,11 +28,10 @@ const userRoute = require('./routes/User')
 const categoryRoute = require('./routes/Category')
 const bookingRoute = require('./routes/Booking')
 const ratingRoute =  require("./routes/Rating")
-const favoritesRoute = require("./routes/Favorites")
+const favoritesRoute = require("./")
 app.use('/user', userRoute)
 app.use('/category', categoryRoute)
 app.use('/booking', bookingRoute)
 app.use("/rate",ratingRoute);
-app.use("/favorites",favoritesRoute);
 
 app.listen(5000)

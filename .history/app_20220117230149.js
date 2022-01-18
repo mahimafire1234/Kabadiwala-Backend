@@ -33,6 +33,6 @@ app.use('/user', userRoute)
 app.use('/category', categoryRoute)
 app.use('/booking', bookingRoute)
 app.use("/rate",ratingRoute);
-app.use("/favorites",favoritesRoute);
+app.use("/")
 
 app.listen(5000)
