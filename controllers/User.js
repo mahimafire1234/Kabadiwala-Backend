@@ -222,6 +222,7 @@ exports.get_user_from_id = (req, res, next) => {
 exports.update = (req, res, next) => {
 
     const id = req.userdata._id;
+    console.log(req.files);
 
     User.findByIdAndUpdate(id, req.body)
         .exec()
