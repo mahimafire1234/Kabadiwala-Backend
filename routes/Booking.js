@@ -4,7 +4,7 @@ const router = new express.Router()
 
     
   
-const { book, getPending, approved, getapproved,getallBooks, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined,get_one} = require('../controllers/Booking')
+const { book, getPending, approved, getapproved,getallBooks, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined,get_one, approvedOrderRequest} = require('../controllers/Booking')
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
@@ -33,6 +33,10 @@ router
 router
 .route('/approved/:id')
 .put(verifyAdmin, approved)
+
+router
+.route('/approvedOrderRequest/:id')
+.put(verifyAdmin, approvedOrderRequest)
 
 router
 .route('/declined/:id')
