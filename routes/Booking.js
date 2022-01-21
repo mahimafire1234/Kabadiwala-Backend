@@ -2,13 +2,9 @@ const express = require('express')
 const User = require('../models/Booking')
 const router = new express.Router()
 
-<<<<<<< HEAD
-const { book, getPending, approved, getapproved, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined,get_one,getallBooks} = require('../controllers/Booking')
-=======
     
   
 const { book, getPending, approved, getapproved,getallBooks, getdeclined, reminder, viewapproved, viewdeclined, viewpending, updateBook, update ,declined,get_one, approvedOrderRequest} = require('../controllers/Booking')
->>>>>>> sprint6R
 const { verifyUser, verifyAdmin } = require('../middleware/auth')
 
 router
@@ -23,18 +19,11 @@ router
     .route('/get_payment/:usertype/:id')
     .get(get_one)
 
-<<<<<<< HEAD
-router
-    .route('/getBooking')
-    .get(getallBooks)
-
-=======
     router
     .route('/getAllBooking')
     .get(getallBooks)
 
 
->>>>>>> sprint6R
 // router.get('/viewAppointments/:id', view_appointments)
 // router
 // .route('/viewAppointments/:id')
