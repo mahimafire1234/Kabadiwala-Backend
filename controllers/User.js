@@ -74,10 +74,9 @@ exports.login_user =  function (req, res) {
     // we need to check if the username exits or not
 
     User.findOne({ email: email })
+    .exec()
         .then(function (userdata) {
             console.log(userdata)
-
-
             // all the data of email is now in variable userdata
             if (userdata === null) {
                 // If username is invalid
@@ -101,18 +100,14 @@ exports.login_user =  function (req, res) {
                     data: userdata,
                     message: "auth success"
                 });
-                
+                res.end()
 
-            }
-
-            )
-
+            })
         })
-
         .catch(function (e) {
             console.log(e)
         })
-
+     
 }
 
 //show list of companies
@@ -202,5 +197,5 @@ exports.loggedin_user=  function(req,res){
         res.status(500).json({ message: e });
       });
       res.end()
-
+    
     }
