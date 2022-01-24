@@ -265,7 +265,8 @@ exports.change_password = (req, res, next) => {
         .exec()
         .then(user => {
             bcrypt.compare(req.body.password, user.password, (err, result) => {
-                if (err) {
+        
+                if (!result) {
                     return res.status(401).json({
                         message: "Incorrect password"
                     })
@@ -301,7 +302,8 @@ exports.change_password = (req, res, next) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error: err
+                error: err,
+                message: "Error in changing password"
             })
         })
 }
