@@ -6,8 +6,7 @@ const FavoritesSchema = new mongoose.Schema({
         "companyID": { type: String },
         "companyName": {type: String},
         "companyEmail":{type:String},
-        "companyImage":{type:String},
-        
+        "companyImage"
     }
     ]
 })
