@@ -5,7 +5,7 @@ const auth=require("../middleware/auth")
 const upload = require("../middleware/fileUpload")
 
 //require Controllers
-const { register,showOne, get_company,loggedin_company,loggedin_user, update, change_password} = require('../controllers/User')
+const { register,showOne, get_company,loggedin_company,loggedin_user, update, change_password, forgot_password} = require('../controllers/User')
 
 //link
 router.post('/register', register)
@@ -22,6 +22,12 @@ router
 router
 .route('/password')
 .patch(auth.verifyLoggedIn, change_password)
+
+router
+.route('/forgot_password')
+.get(forgot_password)
+
+
 
 
 const userController= require('../controllers/User')

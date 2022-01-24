@@ -1,10 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const dotenv = require('dotenv')
+
 
 require('./db/db_connection')
 
 const app = express()
+
+dotenv.config({
+  path: "./config/.env",
+});
 
 app.use(morgan("dev"));
 app.use('/files', express.static('files'));

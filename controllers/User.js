@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv")
 const fs = require('fs')
+const nodemailer = require('nodemailer')
 const auth = require("../middleware/auth")
 
 const User = require("../models/user");
 
 const { Module } = require("module");
+
 
 //register user account
 exports.register = (req, res) => {
@@ -100,15 +101,7 @@ exports.login_user = function (req, res) {
                     data: userdata,
                     message: "auth success"
                 });
-<<<<<<< HEAD
-
-
-            }
-
-            )
-=======
                 res.end()
->>>>>>> 33bf4229eae5d53b1f4a1ba4a7f7a9b77b089ed1
 
             })
         })
@@ -309,4 +302,30 @@ exports.change_password = (req, res, next) => {
                 message: "Error in changing password"
             })
         })
+}
+
+
+exports.forgot_password = (req, res, next) => {
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+    })
+
+    let mailOptions = {
+        from: "flyingpiranhasforagile@gmail.com",
+        to: "bikrampukar@gmail.com",
+        subject: "test email",
+        text: "test text"
+    }
+
+    transporter.sendMail(mailOptions,  (err,data) => {
+        if(err) console.log("Error occurs: " +  err)  ;
+        else console.log("Email sent");
+
+    })
+
+    res.end()
 }
