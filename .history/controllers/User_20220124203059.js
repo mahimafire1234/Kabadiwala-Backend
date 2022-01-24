@@ -100,7 +100,11 @@ exports.login_user = function (req, res) {
                     data: userdata,
                     message: "auth success"
                 });
-                res.end()
+
+
+            }
+
+            )
 
             })
         })

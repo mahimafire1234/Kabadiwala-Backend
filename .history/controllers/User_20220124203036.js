@@ -100,7 +100,11 @@ exports.login_user = function (req, res) {
                     data: userdata,
                     message: "auth success"
                 });
-                res.end()
+
+
+            }
+
+            )
 
             })
         })
@@ -167,6 +171,19 @@ exports.loggedin_company = function (req, res) {
     // console.log("hit");
     const id = req.userdata._id;
     // console.log(id);
+<<<<<<< HEAD
+     User.findById(id)
+    .then(function (data) {
+        res
+          .status(200)
+          .json({ success: true, data });
+        // console.log("company data aayo"+{data});
+      })
+      .catch(function (e) {
+        res.status(500).json({ message: e });
+      });
+    }
+=======
     User.findById(id)
         .then(function (data) {
             res
@@ -179,6 +196,7 @@ exports.loggedin_company = function (req, res) {
         });
     res.end()
 }
+>>>>>>> 66faa44e60d30c691e71b9072b12cc310b5d53cb
 
 
 //show logged in user
@@ -187,6 +205,19 @@ exports.loggedin_user = function (req, res) {
     const id = req.userdata._id;
     // console.log(id);
     User.findById(id)
+<<<<<<< HEAD
+    .then(function (data) {
+        res
+          .status(200)
+          .json({ success: true, data });
+        console.log("logged in user data aayo"+{data});
+      })
+      .catch(function (e) {
+        res.status(500).json({ message: e });
+      });
+
+    }
+=======
         .then(function (data) {
             res
                 .status(200)
@@ -302,3 +333,4 @@ exports.change_password = (req, res, next) => {
             })
         })
 }
+>>>>>>> 66faa44e60d30c691e71b9072b12cc310b5d53cb
