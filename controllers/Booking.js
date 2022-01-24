@@ -1,3 +1,4 @@
+const { status } = require("express/lib/response");
 const res = require("express/lib/response");
 const mongoose = require("mongoose");
 
@@ -23,6 +24,8 @@ exports.book = (req, res) => {
         })
 }
 
+
+
 // view transaction
 exports.get_one = async (req, res) => {
     // const Booking.find(req.params.usertype: req.params.id)
@@ -47,10 +50,10 @@ exports.get_one = async (req, res) => {
     res.end()
 }
 
-exports.getAllBooks = async function (req, res) {
+exports.getallBooks = async function (req, res) {
     try {
-        const _id = req.userdata._id;
-        const booking = await Booking.find({ company: _id }).populate("user")
+        // const _id = req.userdata._id;
+        const booking = await Booking.find({company:null}).populate("user")
         res.json({ success: true, data: booking })
     } catch (error) {
         res.status(500).json({
@@ -61,6 +64,34 @@ exports.getAllBooks = async function (req, res) {
     res.end()
 }
 
+
+exports.approvedOrderRequest = async (req, res) => {
+    try {
+        const id=req.userdata._id
+        const _id = req.params.id
+        const approved_data = await Booking.updateOne(
+            { _id: _id },
+            { status: "accepted" ,company:id}
+
+
+        )
+        
+
+    //   const data= await Booking.findById(_id)
+    //     res.json({ success: true, data: data })
+        res.json({ success: true, data: approved_data })
+
+
+
+    } catch (error) {
+        res.status(500).json({
+            error: error,
+            message: "failed to approved"
+        })
+
+    }
+
+}
 
 exports.approved = async (req, res) => {
     try {
@@ -82,8 +113,6 @@ exports.approved = async (req, res) => {
         })
 
     }
-
-
 
 }
 
