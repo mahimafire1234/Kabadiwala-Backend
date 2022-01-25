@@ -100,15 +100,7 @@ exports.login_user = function (req, res) {
                     data: userdata,
                     message: "auth success"
                 });
-<<<<<<< HEAD
-
-
-            }
-
-            )
-=======
                 res.end()
->>>>>>> 33bf4229eae5d53b1f4a1ba4a7f7a9b77b089ed1
 
             })
         })
