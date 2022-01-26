@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer')
 const auth = require("../middleware/auth")
 
 const User = require("../models/user");
+const Otp = require("../models/Otp");
 
 const { Module } = require("module");
 
@@ -305,27 +306,120 @@ exports.change_password = (req, res, next) => {
 }
 
 
-exports.forgot_password = (req, res, next) => {
-    let transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD
+exports.forgot_password =  async function (req, res, next) {
+    let user_id = req.userdata._id
+
+    User.findById(user_id)
+    .then(async (result) => {
+        
+        if(result != null){
+            let otpCode = Math.floor((Math.random() * 10000) + 1)
+            await Otp.findOneAndDelete({email: req.userdata.email})
+
+            let optData = Otp({
+                email: req.userdata.email,
+                code: otpCode,
+                expiresIn: Date.now() + 300*1000 // expires in 5 mins
+            })
+
+            optData.save()
+            .then(result => {
+                let transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                })
+                let mailOptions = {
+                    from: "flyingpiranhasforagile@gmail.com",
+                    to: req.userdata.email,
+                    subject: "Reset password",
+                    text: `Reset password \n 
+                        Your otp is: ${otpCode} 
+                         It will expire in 5 minutes`
+                }
+            
+                transporter.sendMail(mailOptions,  (err,data) => {
+                    if(err) {
+                        res.status(401).json({
+                            success: false, 
+                            message: "Error occurs in sending email: " +  err})  ;
+                    }else{
+                        res.status(200).json({
+                            success: true,
+                            message: "Email sent!"})
+                    } 
+                })
+            }) 
+            .catch(err => {
+                res.status(500).json({
+                    success: false,
+                    message: "Error in creating otp"
+                })
+            })
+
+        }else{
+            res.status(401).json({
+                success: false,
+                message: "Email does not exist"
+            })
         }
     })
-
-    let mailOptions = {
-        from: "flyingpiranhasforagile@gmail.com",
-        to: "bikrampukar@gmail.com",
-        subject: "test email",
-        text: "test text"
-    }
-
-    transporter.sendMail(mailOptions,  (err,data) => {
-        if(err) console.log("Error occurs: " +  err)  ;
-        else console.log("Email sent");
-
+    .catch(err => {
+        res.status(500).json({
+            success: false,
+            message: "Error finding email: " + err,
+            error: err
+        })
     })
+}
 
-    res.end()
+exports.reset_password = (req, res) => {
+    Otp.findOne({email: req.userdata.email, code: req.body.code})
+    .then(result => {
+        if(result != null){
+            let currentTime = Date.now()
+            
+            if(currentTime > result.expiresIn) {
+                res.status(401).json({
+                    success: false,
+                    message: "Token has already expired"
+                })
+            }else{
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    if (err) {
+                        return res.status(500).json({
+                            error: err
+                        })
+                    } else {
+                        User.findByIdAndUpdate(req.userdata._id, { password: hash })
+                            .then(result => {
+                                return res.status(200).json({
+                                    success: true,
+                                    message: "Password reset successfully"
+                                })
+                            })
+                            .catch(err => {
+                                res.status(401).json({
+                                    error: err,
+                                    message: "Error in password reset"
+                                })
+                            })
+                    }
+                })
+            }
+        }else{
+            res.status(500).json({
+                success: false,
+                message: "Invalid OTP code"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({
+            success: false,
+            message: "Error: " + err
+        })
+    })
 }
