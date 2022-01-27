@@ -7,7 +7,7 @@ const upload = require("../middleware/fileUpload")
 //require Controllers
 const { register,showOne, get_company,loggedin_company,
     loggedin_user, update, change_password, forgot_password,
-    reset_password
+    check_otp, reset_password
 } = require('../controllers/User')
 
 //link
@@ -28,11 +28,12 @@ router
 
 router
 .route('/forgot_password')
-.post(auth.verifyLoggedIn, forgot_password)
+.post(forgot_password)
 
 router
 .route('/reset_password')
-.patch(auth.verifyLoggedIn, reset_password)
+.post(check_otp)
+.patch(reset_password)
 
 
 
