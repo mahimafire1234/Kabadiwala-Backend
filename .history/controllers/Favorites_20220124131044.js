@@ -93,20 +93,41 @@ exports.getFavorites= async (request,response) => {
 // delete from favorites
 exports.deleteFavorites= async (request,response) => {
     const userId = request.params.id;
-    const companyID = request.params.companyID;
-    console.log(userId);
+    const productId = request.params.productId;
+
     try{
-        let favorites = await FavoritesModel.findOne({id:userId})
-        let itemIndex = favorites.company.findIndex(p => p.companyID == companyID)
+        let favorites = await FavoritesModel.findOne({userId:userId})
+        let itemIndex = favorites.product.findIndex(p => p.productId == productId)
             if(itemIndex > -1){
                 // let productItem = favorites.product[itemIndex]
-                favorites.company.splice(itemIndex,1);
+                favorites.product.splice(itemIndex,1);
                 // splice removes the item from the cart
             }
             favorites= await favorites.save()
-            return response.status(200).json({success:true,message:"Removed from your favorites"})
+            return response.send({success:"true",favorites:favorites})
     }
     catch(error){
-        response.status(404).json({success:false,message:error})
+        response.status(404).json({success:"false",error:error})
     }
 }
+// delete cart item
+router.delete("/deleteFavoritesItem/:id/:productId", authenctication.verifyUser,async (request,response) => {
+    // get user and product id
+    const userId = request.params.id;
+    const productId = request.params.productId;
+
+    try{
+        let favorites = await FavoritesModel.findOne({userId:userId})
+        let itemIndex = favorites.product.findIndex(p => p.productId == productId)
+            if(itemIndex > -1){
+                // let productItem = favorites.product[itemIndex]
+                favorites.product.splice(itemIndex,1);
+                // splice removes the item from the cart
+            }
+            favorites= await favorites.save()
+            return response.send({success:"true",favorites:favorites})
+    }
+    catch(error){
+        response.status(404).json({success:"false",error:error})
+    }
+})

@@ -94,7 +94,7 @@ exports.getFavorites= async (request,response) => {
 exports.deleteFavorites= async (request,response) => {
     const userId = request.params.id;
     const companyID = request.params.companyID;
-    console.log(userId);
+    console.log()
     try{
         let favorites = await FavoritesModel.findOne({id:userId})
         let itemIndex = favorites.company.findIndex(p => p.companyID == companyID)

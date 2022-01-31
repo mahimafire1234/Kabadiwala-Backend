@@ -92,21 +92,5 @@ exports.getFavorites= async (request,response) => {
 
 // delete from favorites
 exports.deleteFavorites= async (request,response) => {
-    const userId = request.params.id;
-    const companyID = request.params.companyID;
-    console.log(userId);
-    try{
-        let favorites = await FavoritesModel.findOne({id:userId})
-        let itemIndex = favorites.company.findIndex(p => p.companyID == companyID)
-            if(itemIndex > -1){
-                // let productItem = favorites.product[itemIndex]
-                favorites.company.splice(itemIndex,1);
-                // splice removes the item from the cart
-            }
-            favorites= await favorites.save()
-            return response.status(200).json({success:true,message:"Removed from your favorites"})
-    }
-    catch(error){
-        response.status(404).json({success:false,message:error})
-    }
+    
 }

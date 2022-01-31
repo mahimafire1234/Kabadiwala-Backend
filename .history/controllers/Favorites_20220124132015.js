@@ -94,7 +94,7 @@ exports.getFavorites= async (request,response) => {
 exports.deleteFavorites= async (request,response) => {
     const userId = request.params.id;
     const companyID = request.params.companyID;
-    console.log(userId);
+
     try{
         let favorites = await FavoritesModel.findOne({id:userId})
         let itemIndex = favorites.company.findIndex(p => p.companyID == companyID)
@@ -104,9 +104,9 @@ exports.deleteFavorites= async (request,response) => {
                 // splice removes the item from the cart
             }
             favorites= await favorites.save()
-            return response.status(200).json({success:true,message:"Removed from your favorites"})
+            return response.send({success:"true",favorites:favorites})
     }
     catch(error){
-        response.status(404).json({success:false,message:error})
+        response.status(404).json({success:"false",error:error})
     }
 }

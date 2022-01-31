@@ -7,7 +7,8 @@ const upload = require("../middleware/fileUpload")
 //require Controllers
 const { register,showOne, get_company,loggedin_company,
     loggedin_user, update, change_password, forgot_password,
-    check_otp, reset_password
+    check_otp, reset_password,
+    deleteAccount
 } = require('../controllers/User')
 
 //link
@@ -16,6 +17,8 @@ router.get('/showOne/:id',showOne)
 router.get('/get_company', get_company)
 router.get("/loggedin_company",auth.verifyAdmin,loggedin_company)
 router.get("/loggedin_user",auth.verifyUser,loggedin_user)
+router.delete("/deleteAccount/:id",auth.verifyUser,deleteAccount)
+
 
 router
 .route('/')

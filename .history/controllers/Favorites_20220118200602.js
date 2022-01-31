@@ -1,5 +1,4 @@
 // this file is for favorites
-const { request } = require("express");
 const FavoritesModel = require("../models/Favorites");
 const User = require("../models/user");
 
@@ -22,7 +21,6 @@ exports.addFavorites = async (request,response)=>{
         }
         // getting product details
         const companyName = companyToadd.name;
-        const companyEmail = companyToadd.email;
 
         // if user exists check if product exists for that user
         if(favorites){
@@ -36,8 +34,7 @@ exports.addFavorites = async (request,response)=>{
             else{
                 favorites.company.push({
                     companyID,
-                    companyName,
-                    companyEmail
+                    companyName
                 })
             }
             // save the favorites
@@ -52,7 +49,7 @@ exports.addFavorites = async (request,response)=>{
             const newWishlist = await FavoritesModel.create(
                 {
                     id,
-                    company:[{companyID,companyName,companyEmail}]
+                    company:[{companyID,companyName}]
                 }
             )
             return response.status(201).json({success :true,data : newWishlist})
@@ -72,7 +69,7 @@ exports.getFavorites= async (request,response) => {
     const userId = request.params.id;
     // check if user exists
     try {
-        FavoritesModel.find({ id: userId }).then(
+        Favori.find({ userID: company_id }).then(
             (data) => {
                 if(data.length > 0){
                     response.status(200).send({success:true,data:data});
@@ -87,26 +84,17 @@ exports.getFavorites= async (request,response) => {
     catch (error) {
         response.status(404).json({ error: error })
     }
-    
-};
-
-// delete from favorites
-exports.deleteFavorites= async (request,response) => {
-    const userId = request.params.id;
-    const companyID = request.params.companyID;
-    console.log(userId);
     try{
-        let favorites = await FavoritesModel.findOne({id:userId})
-        let itemIndex = favorites.company.findIndex(p => p.companyID == companyID)
-            if(itemIndex > -1){
-                // let productItem = favorites.product[itemIndex]
-                favorites.company.splice(itemIndex,1);
-                // splice removes the item from the cart
-            }
-            favorites= await favorites.save()
-            return response.status(200).json({success:true,message:"Removed from your favorites"})
+        // if user exists in the favorites model and the product kength for that user us greater than 0
+        const favoriteItem = await FavoritesModel.findOne({id:userId})
+        if(favoriteItem && favoriteItem.company.length >0){
+            return response.send({success:true,favoriteItem:favoriteItem})
+        }else{
+            response.send(null)
+        }
     }
-    catch(error){
-        response.status(404).json({success:false,message:error})
-    }
-}
+    catch(error) 
+        { response.status(404).json({success : "false" , error:error})
+        }
+
+};
