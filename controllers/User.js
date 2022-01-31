@@ -302,3 +302,19 @@ exports.change_password = (req, res, next) => {
             })
         })
 }
+
+//delete user account
+exports.deleteAccount = (req,res,next) => {
+    console.log("hiiiiitt");
+    const id = req.params.id;
+    console.log(id);
+    User.findOneAndDelete({ _id: id }).exec()
+        .then(function (result) {
+            res.status(200).json({ success:true, message: "Account deleted!!" })
+            console.log("deleted")
+        })
+        .catch(error => {
+            res.status(401).json({ success:false, message: "Error" })
+            console.log(error);
+        });
+}
