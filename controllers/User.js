@@ -171,15 +171,12 @@ exports.loggedin_company = function (req, res) {
     // console.log(id);
     User.findById(id)
         .then(function (data) {
-            res
-                .status(200)
-                .json({ success: true, data });
+            res.status(200).json({ success: true, data: data });
             // console.log("company data aayo"+{data});
         })
         .catch(function (e) {
             res.status(500).json({ message: e });
         });
-    res.end()
 }
 
 
@@ -190,9 +187,7 @@ exports.loggedin_user = function (req, res) {
     // console.log(id);
     User.findById(id)
         .then(function (data) {
-            res
-                .status(200)
-                .json({ success: true, data });
+            res.status(200).json({ success: true, data: data });
             console.log("logged in user data aayo" + { data });
         })
         .catch(function (e) {
